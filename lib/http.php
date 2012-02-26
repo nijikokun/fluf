@@ -14,7 +14,7 @@ namespace {
 
         static function setup () {
             self::$session = new \http\Session('http_session');
-            self::$request = $_SERVER['REQUEST_URI'];
+            self::$request = preg_replace('/\?.+/', '', $_SERVER['REQUEST_URI']);
             self::$method = $_SERVER['REQUEST_METHOD'];
             self::$script = $_SERVER['SCRIPT_NAME'];
             self::sanitize();
@@ -44,7 +44,8 @@ namespace {
         static function run () {
             foreach(self::$routes as $i => $r) {
                 if($r->match && !$r->ran) {
-                    call_user_func_array($r->callback, $r->params);
+                    $result = call_user_func_array($r->callback, $r->params);
+                    if(is_array($result)) echo json_encode($result);
                     $r->ran = true;
                 }
             }
@@ -84,7 +85,6 @@ namespace http {
         function __construct ($request, $url, $method, $callback, $cond = array()) {
             if(empty($request) || empty($url) || empty($callback)) return;
             if(is_callable($callback)) $this->callback = $callback;
-
             $this->url = $url;
             $this->method = is_array($method) ? $method : array( $method );
             $this->conditions = $cond;
@@ -112,11 +112,7 @@ namespace http {
 
         function regex ($matches) {
             $key = str_replace(':', '', $matches[0]);
-            if (array_key_exists($key, $this->conditions)) {
-                return '('.$this->conditions[$key].')';
-            } else {
-                return '([a-zA-Z0-9_\+\-%]+)';
-            }
+            return array_key_exists($key, $this->conditions) ?  '('.$this->conditions[$key].')' : '([a-zA-Z0-9_\+\-%]+)';
         }
     }
 
