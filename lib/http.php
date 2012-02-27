@@ -6,33 +6,32 @@
 
 namespace {
     class http {
-        static $request;
-        static $method;
-        static $script;
-        static $session;
+        static $request, $get, $post, $session;
+        static $uri, $method, $script;
         private static $routes = array();
 
         static function setup () {
             self::$session = new \http\Session('http_session');
-            self::$request = preg_replace('/\?.+/', '', $_SERVER['REQUEST_URI']);
+            self::$request = new \http\Arrays($_REQUEST);
+            self::$post = new \http\Arrays($_POST);
+            self::$get = new \http\Arrays($_GET);
+            self::$uri = preg_replace('/\?.+/', '', $_SERVER['REQUEST_URI']);
             self::$method = $_SERVER['REQUEST_METHOD'];
             self::$script = $_SERVER['SCRIPT_NAME'];
             self::sanitize();
         }
 
         private static function sanitize () {
-            $uri = explode('/', self::$request);
+            $uri = explode('/', self::$uri);
             $name = explode('/', self::$script);
             for($i = 0; $i < count($name); $i++)
                 if($uri[$i] == $name[$i])
                     unset($uri[$i]);
-            self::$request = '/' . implode('/', $uri);
+            self::$uri = '/' . implode('/', $uri);
         }
 
         static function add ($rule, $method, $callback, $cond = array()) {
-            self::$routes[] = new \http\Route(
-                self::$request, $rule, $method, $callback, $cond
-            );
+            self::$routes[] = new \http\Route(self::$uri, $rule, $method, $callback, $cond);
             self::run();
         }
 
@@ -58,20 +57,23 @@ namespace {
 namespace http {
     class Session {
         public function __construct ($name) {
-            session_name($name);
-            session_start();
+            session_name($name); session_start();
         }
 
-        public function __get($key) {
-            global $_SESSION;
-            return isset($_SESSION[$key]) ? $_SESSION[$key] : null;
+        public function __get($k) {
+            global $_SESSION; return isset($_SESSION[$k]) ? $_SESSION[$k] : null;
         }
 
-        public function __set($key, $value) {
-            global $_SESSION;
-            $_SESSION[$key] = $value;
-            return $value;
+        public function __set($k, $v) {
+            global $_SESSION; $_SESSION[$k] = $v; return $v;
         }
+    }
+
+    class Arrays {
+        private $a;
+        public function __construct(&$a) { $this->a = $a; }
+        public function __get($k) { return isset($this->a[$k]) ? $this->a[$k] : null; }
+        public function __set($k, $v) { $this->a[$k] = $v; return $v; }
     }
 
     class Route {
@@ -80,15 +82,15 @@ namespace http {
         public $ran = false;
         public $params = array();
         public $callback;
-        private $conditions, $request;
+        private $conditions, $uri;
 
-        function __construct ($request, $url, $method, $callback, $cond = array()) {
-            if(empty($request) || empty($url) || empty($callback)) return;
+        function __construct ($uri, $url, $method, $callback, $cond = array()) {
+            if(empty($uri) || empty($url) || empty($callback)) return;
             if(is_callable($callback)) $this->callback = $callback;
             $this->url = $url;
             $this->method = is_array($method) ? $method : array( $method );
             $this->conditions = $cond;
-            $this->request = $request;
+            $this->uri = $uri;
             $this->compile();
         }
 
@@ -100,7 +102,7 @@ namespace http {
             $regex .= '/?';
 
             if (
-                preg_match('@^' . $regex . '$@', $this->request, $values) && 
+                preg_match('@^' . $regex . '$@', $this->uri, $values) && 
                 in_array($_SERVER['REQUEST_METHOD'], $this->method)
             ) {
                 array_shift($values);

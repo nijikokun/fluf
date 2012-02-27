@@ -42,6 +42,36 @@ http\get('/profile/:who', function ($who) {
 ?>
 ```
 
+Request & Sessions
+-------
+**http** can help you with requests, and sessions.
+
+Sessions, and Requests (GET, POST, REQUEST) are handled the same way:
+
+``` php
+<?php
+require_once 'lib/http.php';
+
+http\get('/', function () {
+    // ?first appended to url will activate this.
+    if(http::$get->first)
+        http::$session->get = true;
+        
+    // first sent as a POST request will activate this.
+    if(http::$post->first)
+        http::$session->post = true;
+        
+    if(http::$session->get)
+        echo 'Hello World! - by A GET Request.';
+        
+    if(http::$session->post)
+        echo 'Hello World! - by A POST Request.';
+    
+    if(!http::$session->get || !http::$session->post)
+        echo 'Hello World!';
+});
+```
+
 Ajax Support
 -------
 **http** can tell you whether or not a request came through as an ajax request like so:
