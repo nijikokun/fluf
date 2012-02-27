@@ -82,15 +82,25 @@ echo http::ajax() ? 'true' : 'false';
 
 API
 ------
-http\get, 
-http\put, 
-http\post, 
-http\delete
+`http\get`, 
+`http\put`, 
+`http\post`, 
+`http\delete`, 
+`http::redirect`, 
+`http::ajax`, 
+`http::$session`, 
+`http::$request`, 
+`http::$get`, 
+`http::$post`
 
 Changelog
 -------
+- **0.2** 
+ - Added Support for Redirection `http::redirect()`
+ - Added, Request / Get / Post, Objects `http::$request` `http::$get` `http::$post`
+ - Fixed Url Params preventing routing.
 - **0.1**
--- Release
+ - Release
 
 License
 -------
