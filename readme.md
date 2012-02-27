@@ -57,10 +57,6 @@ http\get('/', function () {
     if(http::$get->first)
         http::$session->get = true;
         
-    // first sent as a POST request will activate this.
-    if(http::$post->first)
-        http::$session->post = true;
-        
     if(http::$session->get)
         echo 'Hello World! - by A GET Request.';
         
@@ -69,6 +65,12 @@ http\get('/', function () {
     
     if(!http::$session->get || !http::$session->post)
         echo 'Hello World!';
+});
+
+http\post('/', function () {
+    // first sent as a POST request will activate this.
+    if(http::$post->first)
+        http::$session->post = true;
 });
 ```
 
