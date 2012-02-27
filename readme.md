@@ -17,26 +17,72 @@ require_once 'lib/http.php';
 http\get('/', function () {
     echo 'Hello World!';
 });
-?>
+```
+
+All examples beyond this point assume you have included the http file.
+
+Usage
+------
+**http** supports a broad range of input, everything from anonymous functions to class methods.
+
+**Anonymous Function**
+
+``` php
+<?
+http\get('/', function () {
+    echo 'Anonymous!';
+});
+```
+
+**Anonymous Function & Outside Variables**<br />
+Let's say you want to use a template manager and it's not global or a static. Easy.
+
+``` php
+<?
+// We are using Twig from Symfony
+http\get('/', function () use ($twig) {
+    $template = $twig->loadTemplate('index.html');
+    echo $template->render(array());
+});
+```
+
+**Function**
+
+``` php
+<?
+function hello_world () {
+    echo 'Hello World!';
+}
+
+http\get('/', 'hello_world');
+```
+
+**Class**
+
+``` php
+<?
+class hello {
+    function world () {
+        echo 'Hello World!';
+    }
+}
+
+http\get('/', array('hello', 'world'));
 ```
 
 Parameters
 ------
-**http** supports parameters, here is a basic example:
+**http** supports parameters, passing of url based data to your code, here is a basic example:
 
 ``` php
 <?
-require_once 'lib/http.php';
-
 http\get('/', function () {
     echo 'Hello World!';
 });
 
-http\get('/profile', function () {
-    header('Location: /');
-});
-
-http\get('/profile/:who', function ($who) {
+http\get('/:who', function ($who) {
+    // This is not being sanitized or validated so make sure
+    // you do that before using in a live product!
     echo 'Viewing Profile of ' . $who;
 });
 ?>
@@ -49,9 +95,7 @@ Request & Sessions
 Sessions, and Requests (GET, POST, REQUEST) are handled the same way:
 
 ``` php
-<?php
-require_once 'lib/http.php';
-
+<?
 http\get('/', function () {
     // ?first appended to url will activate this.
     if(http::$get->first)
@@ -79,7 +123,19 @@ Ajax Support
 **http** can tell you whether or not a request came through as an ajax request like so:
 
 ``` php
+<?
 echo http::ajax() ? 'true' : 'false';
+```
+
+Want to return some data from that Ajax Callback? Easy. 
+**http** supports json_encoding without any extra markup:
+
+``` php
+<?
+http\get('/', function () {
+    if(http::ajax())
+        return array( 'Hello', 'World' ); // outputs: [ 'Hello', 'World' ]
+});
 ```
 
 API
@@ -98,6 +154,7 @@ API
 Changelog
 -------
 - **0.2** 
+ - Added Support for Easy JSON output.
  - Added Support for Redirection `http::redirect()`
  - Added, Request / Get / Post, Objects `http::$request` `http::$get` `http::$post`
  - Fixed Url Params preventing routing.
