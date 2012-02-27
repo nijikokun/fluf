@@ -35,9 +35,8 @@ namespace {
             self::run();
         }
 
-        static function ajax () {
-            return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 
-            $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
+        static function ajax ($x = 'HTTP_X_REQUESTED_WITH') {
+            return isset($_SERVER[$x]) &&  $_SERVER[$x] === 'XMLHttpRequest';
         }
 
         static function redirect($path) {
