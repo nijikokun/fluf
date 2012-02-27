@@ -1,5 +1,5 @@
 <?php
-// http v0.1
+// http v0.2
 // micro-routing framework for php
 // @author Nijiko Yonskai <http://blog.nexua.org>
 // @license AOL <http://aol.nexua.org/#!/http.php/Nijiko Yonskai/nijikokun@gmail.com/nijikokun>
@@ -40,12 +40,16 @@ namespace {
             $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
         }
 
+        static function redirect($path) {
+            $uri = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname($_SERVER['SCRIPT_FILENAME']));
+            header('Location: ' . ((preg_match('%^http://|https://%', $path) > 0) ? $path : $uri . $path));
+        }
+
         static function run () {
             foreach(self::$routes as $i => $r) {
                 if($r->match && !$r->ran) {
-                    $result = call_user_func_array($r->callback, $r->params);
+                    $result = call_user_func_array($r->callback, $r->params); $r->ran = true;
                     if(is_array($result)) echo json_encode($result);
-                    $r->ran = true;
                 }
             }
         }
@@ -85,11 +89,11 @@ namespace http {
         private $conditions, $uri;
 
         function __construct ($uri, $url, $method, $callback, $cond = array()) {
-            if(empty($uri) || empty($url) || empty($callback)) return;
+            if(empty($uri) || empty($url) || empty($method) || empty($callback)) return;
             if(is_callable($callback)) $this->callback = $callback;
-            $this->url = $url;
             $this->method = is_array($method) ? $method : array( $method );
             $this->conditions = $cond;
+            $this->url = $url;
             $this->uri = $uri;
             $this->compile();
         }
@@ -98,8 +102,7 @@ namespace http {
             $names = $values = array(); 
             preg_match_all('@:([\w]+)@', $this->url, $names, PREG_PATTERN_ORDER);
             $names = $names[0];
-            $regex  = preg_replace_callback('@:[\w]+@', array($this, 'regex'), $this->url);
-            $regex .= '/?';
+            $regex = (preg_replace_callback('@:[\w]+@', array($this, 'regex'), $this->url)) . '/?';
 
             if (
                 preg_match('@^' . $regex . '$@', $this->uri, $values) && 
