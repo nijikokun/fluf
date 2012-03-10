@@ -39,9 +39,10 @@ namespace {
             return isset($_SERVER[$x]) &&  $_SERVER[$x] === 'XMLHttpRequest';
         }
 
-        static function redirect($path) {
+        static function redirect($path, $e = true) {
             $uri = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname($_SERVER['SCRIPT_FILENAME']));
-            header('Location: ' . ((preg_match('%^http://|https://%', $path) > 0) ? $path : $uri . $path));
+            header('Location: ' . ((preg_match('%^http://|https://%', $path) > 0) ? $path : $uri . $path)); 
+            if($e) exit;
         }
 
         static function run () {
