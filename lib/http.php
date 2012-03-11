@@ -6,8 +6,7 @@
 
 namespace {
     class http {
-        static $request, $get, $post, $session;
-        static $uri, $method, $script;
+        static $request, $get, $post, $session, $uri, $method, $script;
         private static $routes = array();
 
         static function setup () {
@@ -39,10 +38,9 @@ namespace {
             return isset($_SERVER[$x]) &&  $_SERVER[$x] === 'XMLHttpRequest';
         }
 
-        static function redirect($path, $e = true) {
+        static function redirect($path, $exit = true) {
             $uri = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname($_SERVER['SCRIPT_FILENAME']));
-            header('Location: ' . ((preg_match('%^http://|https://%', $path) > 0) ? $path : $uri . $path)); 
-            if($e) exit;
+            header('Location: ' . ((preg_match('%^http://|https://%', $path) > 0) ? $path : $uri . $path)); if($exit) exit;
         }
 
         static function run () {
@@ -50,7 +48,7 @@ namespace {
                 if($r->match && !$r->ran) {
                     $result = call_user_func_array($r->callback, $r->params); $r->ran = true;
                     if(is_array($result)) echo json_encode($result);
-                }
+                } else unset(self::$routes[$i]);
             }
         }
     }
@@ -81,11 +79,7 @@ namespace http {
     }
 
     class Route {
-        public $url;
-        public $match = false;
-        public $ran = false;
-        public $params = array();
-        public $callback;
+        public $url, $callback, $match = false, $ran = false, $params = array();
         private $conditions, $uri;
 
         function __construct ($uri, $url, $method, $callback, $cond = array()) {
@@ -103,11 +97,8 @@ namespace http {
             preg_match_all('@:([\w]+)@', $this->url, $names, PREG_PATTERN_ORDER);
             $names = $names[0];
             $regex = (preg_replace_callback('@:[\w]+@', array($this, 'regex'), $this->url)) . '/?';
-
-            if (
-                preg_match('@^' . $regex . '$@', $this->uri, $values) && 
-                in_array($_SERVER['REQUEST_METHOD'], $this->method)
-            ) {
+            
+            if (preg_match('@^' . $regex . '$@', $this->uri, $values) && in_array(\http::$method, $this->method)) {
                 array_shift($values);
                 foreach($names as $i => $v) 
                     $this->params[substr($v,1)] = urldecode($values[$i]);
@@ -125,4 +116,15 @@ namespace http {
     function post ($rule, $callback, $cond = array()) { \http::add($rule, 'POST', $callback, $cond); }
     function put ($rule, $callback, $cond = array()) { \http::add($rule, 'PUT', $callback, $cond); }
     function delete ($rule, $callback, $cond = array()) { \http::add($rule, 'DELETE', $callback, $cond); }
+    function map ($rule, $callback, $cond = array()) { return new Map($rule, $callback, $cond); }
+    
+    class Map {
+        function __construct ($rule, $callback, $cond = array()) {
+            $this->r = $rule; $this->cb = $callback; $this->cd = $cond; return $this;
+        }
+        
+        public function via () { 
+            if (func_num_args() !== 0) foreach(func_get_args() as $a) \http::add($this->r, strtoupper($a), $this->cb, $this->cd);
+        }
+    }
 }
