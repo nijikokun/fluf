@@ -8,8 +8,7 @@ A Super-Micro Routing Framework for PHP. **http** allows you to quickly start ro
 keeps the namespace clean, and keeps your codebase sane. Best of all, it's less than 130 lines
 of code.
 
-How it looks
-------
+## How it looks
 ``` php
 <?
 require_once 'lib/http.php';
@@ -21,11 +20,11 @@ http\get('/', function () {
 
 All examples beyond this point assume you have included the http file.
 
-Usage
-------
-**http** supports a broad range of input, everything from anonymous functions to class methods.
+## Usage
+**http** supports a broad range of input, everything from anonymous functions to class methods. 
 
-**Anonymous Function**
+### Anonymous Functions
+These are your basic inline functions, these allow you to create routes without any hassle.
 
 ``` php
 <?
@@ -34,7 +33,7 @@ http\get('/', function () {
 });
 ```
 
-**Anonymous Function & Outside Variables**<br />
+#### Outside Variables
 Let's say you want to use a template manager and it's not global or a static. Easy.
 
 ``` php
@@ -46,7 +45,9 @@ http\get('/', function () use ($twig) {
 });
 ```
 
-**Function**
+### Functions
+Maybe you want to have a little more control of the whitespace in your files and routes. 
+Using outside functions allow you to manage that a little better.
 
 ``` php
 <?
@@ -57,7 +58,9 @@ function hello_world () {
 http\get('/', 'hello_world');
 ```
 
-**Class**
+### Class Functions
+Maybe you want a heirarchy type of control. Something with a little more zing, and readability. 
+**http** allows you to use class methods to keep that OOP fanboy alive.
 
 ``` php
 <?
@@ -70,8 +73,7 @@ class hello {
 http\get('/', array('hello', 'world'));
 ```
 
-Parameters
-------
+## Passing Parameters
 **http** supports parameters, passing of url based data to your code, here is a basic example:
 
 ``` php
@@ -85,11 +87,54 @@ http\get('/:who', function ($who) {
     // you do that before using in a live product!
     echo 'Viewing Profile of ' . $who;
 });
-?>
 ```
 
-Request & Sessions
--------
+Essentially to create parameters you simply prepend a `:` to the parameter name in the route and pass it to the function.
+Note, the parameters are passed in order of appearance.
+
+## Mapping
+**http** allows you to have tons of control over your requests, 
+so maybe you need a custom one or multiple requests for a single function / class.
+
+Using `http\map` allows you to do just that:
+
+``` php
+<?
+http\map('/', function () {
+    // Post Request with the key 'post' sent will activate this.
+    if(http::$post->post)
+        echo 'Hello World! - by A POST Request.';
+    else
+        echo 'Hello World! - by A GET Request.';
+})->via('GET','POST');
+```
+
+You can also define route mappings that don't trigger until you want them to by omitting the `via` method:
+``` php
+<?
+$logged_in = false; // change this to true and see what happens!
+$index = http\map('/', function () {
+    echo "Hello World!";
+});
+
+if($logged_in) $index->via('GET');
+```
+
+## Redirection
+**http** supports local and public redirection, as well as optional exit support so further code isn't executed.
+
+``` php
+<?
+http\get('/logout', function () {
+    http::redirect('/');
+});
+
+http\get('/', function () {
+    echo 'Welcome!';
+});
+```
+
+## Requests & Sessions
 **http** can help you with requests, and sessions.
 
 Sessions, and Requests (GET, POST, REQUEST) are handled the same way:
@@ -118,27 +163,9 @@ http\post('/', function () {
 });
 ```
 
-Mapping
--------
-**http** allows you to have tons of control over your requests, 
-so maybe you need a custom one or multiple requests for a single function / class.
-
-Using `http\map` allows you to do just that:
-
-``` php
-http\map('/', function () {
-    // Post Request with the key 'post' sent will activate this.
-    if(http::$post->post)
-        echo 'Hello World! - by A POST Request.';
-    else
-        echo 'Hello World! - by A GET Request.';
-})->via('GET','POST');
-```
-
 It not only accepts `GET` and `POST`, it accepts anything.
 
-Ajax Support
--------
+## Ajax Support
 **http** can tell you whether or not a request came through as an ajax request like so:
 
 ``` php
@@ -173,6 +200,11 @@ API
 
 Changelog
 -------
+- **0.4**
+ - Added More advanced routing control through `http\map`
+ - Reduced load on requests.
+- **0.3**
+ - Added Optional ability to exit on `http::redirect()`
 - **0.2** 
  - Added Support for Easy JSON output.
  - Added Support for Redirection `http::redirect()`
