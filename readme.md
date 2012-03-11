@@ -110,6 +110,7 @@ http\map('/', function () {
 ```
 
 You can also define route mappings that don't trigger until you want them to by omitting the `via` method:
+
 ``` php
 <?
 $logged_in = false; // change this to true and see what happens!
