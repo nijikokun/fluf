@@ -118,6 +118,25 @@ http\post('/', function () {
 });
 ```
 
+Mapping
+-------
+**http** allows you to have tons of control over your requests, 
+so maybe you need a custom one or multiple requests for a single function / class.
+
+Using `http\map` allows you to do just that:
+
+``` php
+http\map('/', function () {
+    // Post Request with the key 'post' sent will activate this.
+    if(http::$post->post)
+        echo 'Hello World! - by A POST Request.';
+    else
+        echo 'Hello World! - by A GET Request.';
+})->via('GET','POST');
+```
+
+It not only accepts `GET` and `POST`, it accepts anything.
+
 Ajax Support
 -------
 **http** can tell you whether or not a request came through as an ajax request like so:
@@ -140,6 +159,7 @@ http\get('/', function () {
 
 API
 ------
+`http\map`,
 `http\get`, 
 `http\put`, 
 `http\post`, 
