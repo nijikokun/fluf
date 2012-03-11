@@ -1,5 +1,5 @@
 <?php
-// http v0.4
+// http v0.5
 // micro-routing framework for php
 // @author Nijiko Yonskai <http://blog.nexua.org>
 // @license AOL <http://aol.nexua.org/#!/http.php/Nijiko Yonskai/nijikokun@gmail.com/nijikokun>
@@ -11,9 +11,8 @@ namespace {
 
         static function setup () {
             self::$session = new \http\Session('http_session');
-            self::$request = new \http\Arrays($_REQUEST);
-            self::$post = new \http\Arrays($_POST);
-            self::$get = new \http\Arrays($_GET);
+            foreach(array('request','post','get','server') as $method)
+                eval('self::$'.$method.' = new \http\Arrays($_'.strtoupper($method).');');
             self::$uri = preg_replace('/\?.+/', '', $_SERVER['REQUEST_URI']);
             self::$method = $_SERVER['REQUEST_METHOD'];
             self::$script = $_SERVER['SCRIPT_NAME'];
@@ -98,8 +97,7 @@ namespace http {
             $names = $names[0];
             $regex = (preg_replace_callback('@:[\w]+@', array($this, 'regex'), $this->url)) . '/?';
             
-            if (preg_match('@^' . $regex . '$@', $this->uri, $values) && in_array(\http::$method, $this->method)) {
-                array_shift($values);
+            if (preg_match('@^' . $regex . '$@', $this->uri, $values) && in_array(\http::$method, $this->method) && array_shift($values)) {
                 foreach($names as $i => $v) 
                     $this->params[substr($v,1)] = urldecode($values[$i]);
                 $this->match = true;
@@ -111,13 +109,11 @@ namespace http {
             return array_key_exists($key, $this->conditions) ?  '('.$this->conditions[$key].')' : '([a-zA-Z0-9_\+\-%]+)';
         }
     }
-
-    function get ($rule, $callback, $cond = array()) { \http::add($rule, 'GET', $callback, $cond); }
-    function post ($rule, $callback, $cond = array()) { \http::add($rule, 'POST', $callback, $cond); }
-    function put ($rule, $callback, $cond = array()) { \http::add($rule, 'PUT', $callback, $cond); }
-    function delete ($rule, $callback, $cond = array()) { \http::add($rule, 'DELETE', $callback, $cond); }
-    function map ($rule, $callback, $cond = array()) { return new Map($rule, $callback, $cond); }
     
+    foreach(array('get','post','put','delete','patch','head','options') as $method) 
+        eval('namespace http; function '.$method.' ($rule, $callback, $cond = array()) { \http::add($rule, "'.strtoupper($method).'", $callback, $cond); }');
+
+    function map ($rule, $callback, $cond = array()) { return new Map($rule, $callback, $cond); }
     class Map {
         function __construct ($rule, $callback, $cond = array()) {
             $this->r = $rule; $this->cb = $callback; $this->cd = $cond; return $this;
