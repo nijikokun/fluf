@@ -1,12 +1,12 @@
      __     __    __          
     |  |--.|  |_ |  |_ .-----.
-    |     ||   _||   _||  _  |
+    |     ||   _||   _||  [] |
     |__|__||____||____||   __|
-                       |__|   
+                       |__|
 -----
 A Super-Micro Routing Framework for PHP. **http** allows you to quickly start routing, 
 keeps the namespace clean, and keeps your codebase sane. Best of all, it's less than 130 lines
-of code.
+of code!
 
 ## How it looks
 ``` php
@@ -59,7 +59,7 @@ http\get('/', 'hello_world');
 ```
 
 ### Class Functions
-Maybe you want a heirarchy type of control. Something with a little more zing, and readability. 
+Maybe you want a hierarchy type of control. Something with a little more zing, and readability. 
 **http** allows you to use class methods to keep that OOP fanboy alive.
 
 ``` php
