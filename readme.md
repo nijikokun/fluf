@@ -201,6 +201,12 @@ API
 
 Changelog
 -------
+- **0.6**
+ - Use `$_GLOBALS[$v]` instead of `${$v}` for "Superglobals" which really aren't superglobals.
+- **0.5**
+ - Removed redundant code.
+ - Utilize eval for better efficiency where no user input is ever utilized for security reasons.
+ - Changed `$$v` to `${$v}` and `$$methods` to `${$methods}` to prevent issues.
 - **0.4**
  - Added More advanced routing control through `http\map`
  - Reduced load on requests.
