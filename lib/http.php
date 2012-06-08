@@ -1,5 +1,5 @@
 <?php
-// http v0.5
+// http v0.6
 // micro-routing framework for php
 // @author Nijiko Yonskai <http://blog.nexua.org>
 // @license AOL <http://aol.nexua.org/#!/http.php/Nijiko Yonskai/nijikokun@gmail.com/nijikokun>
