@@ -12,7 +12,7 @@ namespace {
         static function setup () {
             self::$session = new \http\Session('http_session');
             foreach(array('request','post','get','server') as $method) {
-                $v = '_'.strtoupper($method); self::${$method} = new \http\Arrays(${$v}); }
+                $v = '_'.strtoupper($method); self::${$method} = new \http\Arrays($_GLOBALS[$v]); }
             self::$uri = preg_replace('/\?.+/', '', $_SERVER['REQUEST_URI']);
             self::$method = $_SERVER['REQUEST_METHOD'];
             self::$script = $_SERVER['SCRIPT_NAME'];
