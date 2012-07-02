@@ -12,7 +12,7 @@ namespace {
         static function setup () {
             self::$session = new \http\Session('http_session');
             foreach(array('request','post','get','server') as $method) {
-                $v = '_'.strtoupper($method); self::${$method} = new \http\Arrays($_GLOBALS[$v]); }
+                $v = '_'.strtoupper($method); self::${$method} = new \http\Arrays($GLOBALS[$v]); }
             self::$uri = preg_replace('/\?.+/', '', $_SERVER['REQUEST_URI']);
             self::$method = $_SERVER['REQUEST_METHOD'];
             self::$script = $_SERVER['SCRIPT_NAME'];
@@ -46,7 +46,7 @@ namespace {
             foreach(self::$routes as $i => $r) {
                 if($r->match && !$r->ran) {
                     $result = call_user_func_array($r->callback, $r->params); $r->ran = true;
-                    if(is_array($result)) echo json_encode($result);
+                    if(is_array($result)) { header('Content-type: application/json; charset=utf-8'); echo json_encode($result); }
                 } else unset(self::$routes[$i]);
             }
         }
