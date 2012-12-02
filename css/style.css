@@ -70,6 +70,11 @@ h1, h2, h3 {
   color: #353535;
 }
 
+pre {
+  background: #F1F1F1;
+  padding: 15px;
+}
+
 /* Reset */
 ul, li, a, p, div {
   list-style: none;
@@ -130,7 +135,7 @@ header {
 }
 
 header .logo {
-  background: url('http://cl.ly/image/0K061A1r0V3r/flufphp.png') no-repeat;
+  background: url('../images/logo.png') no-repeat;
   width: 98px;
   height: 80px;
   text-indent: -99999px;
@@ -170,6 +175,7 @@ header .phrase p em {
 
 aside {
   width: 45%;
+  margin-top: 100px;
 }
 
 aside a.download {
@@ -187,6 +193,7 @@ aside a.download .icon {
   line-height: 1.15;
   position: relative;
   top: 9px;
+  margin-right: 2px;
 }
 
 .webkit aside a.download .icon {
@@ -204,7 +211,7 @@ aside a.download .text {
   vertical-align: middle;
 }
 
-aside a.download:hover .icon:before {
+aside a.download:hover .icon {
   background: #76C721;
   color: #FFFFFF;
 }
