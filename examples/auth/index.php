@@ -1,12 +1,12 @@
 <?php
-include '../lib/http.php';
+include '../lib/fluf.php';
 
 // Our super-duper-secret password.
 $password = '1234';
 
-http\get('/login', function() {
-    if(http::$session->logged_in)
-    	http::redirect('/');
+fluf\get('/login', function() {
+    if(fluf::$session->logged_in)
+    	fluf::redirect('/');
 
     echo '<form method="post">';
     echo 'Password: <input type="password" />';
@@ -16,19 +16,19 @@ http\get('/login', function() {
 
 // Post request for login page, upon form submission
 // the user will land here.
-http\post('/login', function() use ($password) {
+fluf\post('/login', function() use ($password) {
 	// Check password against user input.
-	if(http::$post->password != $password)
-		http::redirect('/login');
+	if(fluf::$post->password != $password)
+		fluf::redirect('/login');
 
 	// We made it through the check, user is now authenticated.
-	http::$session->logged_in = true;
-	http::redirect('/');
+	fluf::$session->logged_in = true;
+	fluf::redirect('/');
 });
 
 // Index Request.
-http\get('/', function () {
-    if(!http::$session->logged_in)
+fluf\get('/', function () {
+    if(!fluf::$session->logged_in)
     	echo 'Please <a href="login/">login</a> to see a great message!';
     else
     	echo 'Hello there good sir, glad to see you logged in!';

@@ -1,10 +1,10 @@
 <?php
-include '../lib/http.php';
+include '../lib/fluf.php';
 
-http\get('/:what', function($what) {
+fluf\get('/:what', function($what) {
     echo $what;
 });
 
-http\get('/', function () {
+fluf\get('/', function () {
     echo 'Hello World!';
 });
