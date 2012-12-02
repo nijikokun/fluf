@@ -197,6 +197,10 @@ aside a.download .icon {
   position: relative;
   top: 9px;
   margin-right: 2px;
+  transition: color,background .2s;
+  -moz-transition: color,background .2s;
+  -webkit-transition: color,background .2s;
+  -o-transition: color,background .2s;
 }
 
 .webkit aside a.download .icon {
@@ -212,6 +216,10 @@ aside a.download .text {
   font-size: 36px;
   font-weight: bold;
   vertical-align: middle;
+  transition: color,background .2s;
+  -moz-transition: color,background .2s;
+  -webkit-transition: color,background .2s;
+  -o-transition: color,background .2s;
 }
 
 aside a.download:hover .icon {
