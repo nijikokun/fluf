@@ -3,7 +3,11 @@
   <head>
     <title>fluf(php) - PHP5 Web Application Framework</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="scripts/jquery.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <!--[if IE]>
+    <link rel="stylesheet" type="text/css" href="css/style.ie.css" />
+    <![endif]-->
   </head>
   <body>
     <div class='container'>
@@ -23,7 +27,7 @@
           <div class='slash'>\</div>
           <div class='phrase'>
             <p>Micro Web Application Framework</p>
-            <p><em>for</em> PHP5</em>
+            <p><em>for</em> PHP5</em></p>
           </div>
       </header>
 
@@ -36,5 +40,9 @@
         </a>
       </aside>
     </div>
+
+    <script type="text/javascript">
+      $('body').addClass($.browser.msie ? 'ie' : $.browser.webkit ? 'webkit' : 'firefox');
+    </script>
   </body>
 </html>

@@ -180,13 +180,17 @@ aside a.download .icon {
   display: inline-block;
   background: #F1F1F1;
   color: #DDDDDD;
-  width: 19%;
+  height: 81px;
+  width: 80px;
   font-size: 63px;
-  padding: 0px 21px;
   text-align: center;
+  line-height: 1.15;
   position: relative;
-  top: 5px;
-  line-height: 1.3;
+  top: 9px;
+}
+
+.webkit aside a.download .icon {
+  top: 11px !important;
 }
 
 aside a.download .text {
@@ -197,10 +201,10 @@ aside a.download .text {
   padding: 10px 15px;
   font-size: 36px;
   font-weight: bold;
-  -webkit-font-smoothing: antialiased;
+  vertical-align: middle;
 }
 
-aside a.download:hover .icon {
+aside a.download:hover .icon:before {
   background: #76C721;
   color: #FFFFFF;
 }

@@ -1,0 +1,4 @@
+aside a.download .icon, aside.a.download:hover .icon {
+  color: transparent;
+  background: none;
+}
