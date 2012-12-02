@@ -175,7 +175,7 @@ aside a.download {
 aside a.download .icon {
   display: inline-block;
   background: #F1F1F1;
-  color: #222;
+  color: #919191;
   height: 81px;
   width: 80px;
   font-size: 63px;
@@ -208,7 +208,7 @@ aside a.download:hover .icon {
 
 aside a.download:hover .text {
   background: #F1F1F1;
-  color: #222;
+  color: #919191;
 }
 
 aside a.download .text em {
