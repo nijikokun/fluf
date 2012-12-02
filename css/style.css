@@ -127,7 +127,7 @@ nav ul li a.active {
 header, aside {
   float: left;
   display: inline-block;
-  margin: 130px 0;
+  margin: 45px 0;
 }
 
 header {
@@ -135,16 +135,16 @@ header {
 }
 
 header .logo {
-  background: url('../images/logo.png') no-repeat;
-  width: 98px;
-  height: 80px;
+  background: url('../images/logo.large.png') no-repeat;
+  width: 234px;
+  height: 183px;
   text-indent: -99999px;
 }
 
 header .statement {
   position: relative;
   left: -35px;
-  margin-top: 70px;
+  margin-top: 50px;
   color: #CCCCCC;
   font-size: 24px;
 }
