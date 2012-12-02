@@ -109,17 +109,15 @@ namespace fluf {
     }
   }
 
-  function map ($rule, $callback, $cond = array()) { return new \fluf\Map($rule, $callback, $cond); }
+  function map ($rule, $callback, $cond = array()) { 
+    return new \fluf\Map($rule, $callback, $cond); 
+  }
+  
   foreach (array('get','post','put','delete','patch','head','options') as $method) 
     eval('namespace fluf; function '.$method.' ($rule, $callback, $cond = array()) { \fluf::add($rule, "'.strtoupper($method).'", $callback, $cond); }');
 
   class Map {
-    function __construct ($rule, $callback, $cond = array()) {
-      $this->r = $rule; $this->cb = $callback; $this->cd = $cond; return $this;
-    }
-    
-    public function via () { 
-      if (func_num_args() !== 0) foreach (func_get_args() as $a) \fluf::add($this->r, strtoupper($a), $this->cb, $this->cd);
-    }
+    function __construct ($rule, $callback, $cond = array()) { $this->r = $rule; $this->cb = $callback; $this->cd = $cond; return $this; }
+    public function via () { if (func_num_args() !== 0) foreach (func_get_args() as $a) \fluf::add($this->r, strtoupper($a), $this->cb, $this->cd); }
   }
 }
