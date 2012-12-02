@@ -81,6 +81,7 @@ textarea.pyg {
   padding: 10px;
   font-family: courier;
   color: #222;
+  outline: none;
 }
 
 /* Reset */
@@ -177,7 +178,7 @@ aside {
 }
 
 aside textarea {
-  width: 100%;
+  width: 100% !important;
 }
 
 aside a.download {
