@@ -2,7 +2,7 @@
 
   A Fast, Minimalistic, Micro Routing / Web Application Framework for PHP5.
 
-  **fluf** allows you to quickly start routing, utilizing sessions, cookies, files, keeps the namespace clean, and keeps your codebase + you sane.
+  **fluf** allows you to quickly start routing, simplify code, keep the namespace clean, and keeps you + your codebase sane.
 
 ``` php
 <?
