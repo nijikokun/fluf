@@ -71,7 +71,7 @@ h1, h2, h3 {
 }
 
 pre {
-  background: #F1F1F1;
+  border: 1px solid #F1F1F1;
   padding: 15px;
 }
 
@@ -97,30 +97,20 @@ nav ul li {
   float: right;
   display: inline-block;
   font-size: 12px;
-  margin-left: 5px;
+  margin-left: 15px;
 }
 
 nav ul li a {
   color: #CCCCCC;
-  border-bottom: 1px dotted white;
+  text-transform: uppercase;
 }
 
 nav ul li a:hover {
-  border-bottom-color: #F1F1F1;
+  color: #AAAAAA;
 }
 
 nav ul li a.active {
   color: #919191;
-}
-
-nav ul li::before {
-  content: "\\";
-  color: #f1f1f1;
-  margin-right: 5px;
-}
-
-nav ul li:last-child::before {
-  content: "";
 }
 
 /* Header / Aside */
@@ -185,7 +175,7 @@ aside a.download {
 aside a.download .icon {
   display: inline-block;
   background: #F1F1F1;
-  color: #DDDDDD;
+  color: #222;
   height: 81px;
   width: 80px;
   font-size: 63px;
@@ -218,7 +208,7 @@ aside a.download:hover .icon {
 
 aside a.download:hover .text {
   background: #F1F1F1;
-  color: #DDDDDD;
+  color: #222;
 }
 
 aside a.download .text em {
