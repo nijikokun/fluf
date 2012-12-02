@@ -50,7 +50,7 @@ fluf\get('/', function () {
     </div>
 
     <script type="text/javascript">
-      $('body').addClass($.browser.msie ? 'ie' : $.browser.webkit ? 'webkit' : 'firefox');
+      $('body').addClass($.browser.msie ? 'ie' : $.browser.webkit ? 'webkit' : $.browser.opera ? 'opera' : 'firefox');
       $(document).ready(function () {
         pyg.options.theme = 'borland';
         pyg.run();

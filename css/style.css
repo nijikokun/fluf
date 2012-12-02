@@ -224,6 +224,12 @@ aside a.download .text {
   line-height: 1.59;
 }
 
+.opera aside a.download .icon, 
+.opera aside.a.download:hover .icon {
+  color: transparent;
+  background: none;
+}
+
 aside a.download:hover .icon {
   background: #76C721;
   color: #FFFFFF;
