@@ -75,6 +75,14 @@ pre {
   padding: 15px;
 }
 
+textarea.pyg {
+  border: 1px solid #F1F1F1;
+  margin: 10px 0;
+  padding: 10px;
+  font-family: courier;
+  color: #222;
+}
+
 /* Reset */
 ul, li, a, p, div {
   list-style: none;
@@ -166,6 +174,10 @@ header .phrase p em {
 aside {
   width: 45%;
   margin-top: 100px;
+}
+
+aside textarea {
+  width: 100%;
 }
 
 aside a.download {
