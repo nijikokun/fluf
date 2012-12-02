@@ -1,0 +1,217 @@
+/*
+ * Fluf Color Scheme
+ *
+ * Greyscale:
+ *    
+ *   #222222, #444444, #919191, #DDDDDD, 
+ *   #CCCCCC, #F1F1F1, #FFFFFF
+ *
+ * Greens:
+ *
+ *   #76C721
+ *
+ */
+@charset 'UTF-8';
+
+@font-face {
+    font-family: 'LigatureSymbols';
+    src: url('../fonts/LigatureSymbols-2.09.eot');
+    src: url('../fonts/LigatureSymbols-2.09.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/LigatureSymbols-2.09.woff') format('woff'),
+         url('../fonts/LigatureSymbols-2.09.ttf') format('truetype'),
+         url('../fonts/LigatureSymbols-2.09.svg#LigatureSymbols') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.lsf {
+  font-family: 'LigatureSymbols';
+}
+
+.lsf-icon:before {
+  content:attr(title);
+  margin-right:0.3em;
+  font-size:130%;
+  font-family: 'LigatureSymbols';
+}
+
+/* Border Boxing */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-text-rendering: optimizeLegibility;
+  -moz-text-rendering: optimizeLegibility;
+  -ms-text-rendering: optimizeLegibility;
+  -o-text-rendering: optimizeLegibility;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -ms-font-smoothing: antialiased;
+  -o-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  -webkit-font-feature-settings: "liga" 1, "dlig" 1;
+  -moz-font-feature-settings: "liga=1, dlig=1";
+  -ms-font-feature-settings: "liga" 1, "dlig" 1;
+  -o-font-feature-settings: "liga" 1, "dlig" 1;
+  font-feature-settings: "liga" 1, "dlig" 1;
+}
+
+body {
+  font: 400 14px/1.7 "Segoe UI", Arial, sans-serif;
+  margin: 0; 
+  padding: 0;
+  color: #444;
+}
+
+h1, h2, h3 {
+  margin: 5px 0;
+  font-weight: normal;
+  color: #353535;
+}
+
+/* Reset */
+ul, li, a, p, div {
+  list-style: none;
+  margin: 0; padding: 0;
+  outline: none;
+  text-decoration: none;
+}
+
+.container {
+  margin: 10px auto;
+  width: 960px;
+}
+
+/* Navigation */
+nav {
+  display: block;
+}
+
+nav ul li {
+  float: right;
+  display: inline-block;
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+nav ul li a {
+  color: #CCCCCC;
+  border-bottom: 1px dotted white;
+}
+
+nav ul li a:hover {
+  border-bottom-color: #F1F1F1;
+}
+
+nav ul li a.active {
+  color: #919191;
+}
+
+nav ul li::before {
+  content: "\\";
+  color: #f1f1f1;
+  margin-right: 5px;
+}
+
+nav ul li:last-child::before {
+  content: "";
+}
+
+/* Header / Aside */
+header, aside {
+  float: left;
+  display: inline-block;
+  margin: 130px 0;
+}
+
+header {
+  width: 55%;
+}
+
+header .logo {
+  background: url('http://cl.ly/image/0K061A1r0V3r/flufphp.png') no-repeat;
+  width: 98px;
+  height: 80px;
+  text-indent: -99999px;
+}
+
+header .statement {
+  position: relative;
+  left: -35px;
+  margin-top: 70px;
+  color: #CCCCCC;
+  font-size: 24px;
+}
+
+header .slash {
+  font-size: 72px;
+  float: left;
+  display: inline-block;
+  margin-right: 5px;
+  position: relative;
+  color: #F1F1F1;
+  top: -28px;
+  left: -20px;
+}
+
+header .phrase {
+  float: left;
+}
+
+header .phrase p {
+  display: block;
+}
+
+header .phrase p em {
+  font-style: normal;
+  color: #DDDDDD;
+}
+
+aside {
+  width: 45%;
+}
+
+aside a.download {
+  display: block;
+}
+
+aside a.download .icon {
+  display: inline-block;
+  background: #F1F1F1;
+  color: #DDDDDD;
+  width: 19%;
+  font-size: 63px;
+  padding: 0px 21px;
+  text-align: center;
+  position: relative;
+  top: 5px;
+  line-height: 1.3;
+}
+
+aside a.download .text {
+  display: inline-block;
+  background: #76C721;
+  color: #FFFFFF;
+  width: 80%;
+  padding: 10px 15px;
+  font-size: 36px;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+aside a.download:hover .icon {
+  background: #76C721;
+  color: #FFFFFF;
+}
+
+aside a.download:hover .text {
+  background: #F1F1F1;
+  color: #DDDDDD;
+}
+
+aside a.download .text em {
+  font-weight: normal;
+  font-style: normal;
+  float: right;
+}
