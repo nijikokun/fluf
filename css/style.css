@@ -73,13 +73,14 @@ h1, h2, h3 {
 pre {
   border: 1px solid #F1F1F1;
   padding: 15px;
+  font-family: monaco, courier, monospace;
 }
 
 textarea.pyg {
   border: 1px solid #F1F1F1;
   margin: 10px 0;
   padding: 15px;
-  font-family: courier;
+  font-family: monaco, courier;
   color: #222;
   outline: none;
 }
@@ -191,9 +192,9 @@ aside a.download .icon {
   color: #919191;
   height: 81px;
   width: 80px;
-  font-size: 63px;
+  font-size: 51px;
   text-align: center;
-  line-height: 1.15;
+  line-height: 1.53;
   position: relative;
   top: 9px;
   margin-right: 2px;
@@ -212,14 +213,15 @@ aside a.download .text {
   background: #76C721;
   color: #FFFFFF;
   width: 80%;
-  padding: 10px 15px;
-  font-size: 36px;
+  padding: 0 15px;
+  font-size: 51px;
   font-weight: bold;
   vertical-align: middle;
   transition: color,background .2s;
   -moz-transition: color,background .2s;
   -webkit-transition: color,background .2s;
   -o-transition: color,background .2s;
+  line-height: 1.59;
 }
 
 aside a.download:hover .icon {
@@ -233,7 +235,18 @@ aside a.download:hover .text {
 }
 
 aside a.download .text em {
-  font-weight: normal;
+  display: block;
+  line-height: .5;
+  font-family: Segoe UI Semilight, Arial Semilight;
+  font-weight: 100;
+  font-size: 14px;
   font-style: normal;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+aside a.download .text span {
   float: right;
+  font-size: 24px;
+  margin-top: 12px;
 }
