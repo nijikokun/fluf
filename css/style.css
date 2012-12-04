@@ -223,7 +223,7 @@ nav ul li a.active {
   -o-transition: color,background .2s;
 }
 
-.front .webkit aside a.download .icon {
+.webkit .front aside a.download .icon {
   top: 11px !important;
 }
 
