@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+  <head>
+    <title>fluf(php) - PHP5 Web Application Framework</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="scripts/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/borland.css">
+    <!--[if IE]><link rel="stylesheet" type="text/css" href="css/style.ie.css" /><![endif]-->
+  </head>
+  <body class='alt'>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="https://github.com/Nijikokun/fluf">github</a></li>
+          <li><a href="#">community</a></li>
+          <li><a href="#">setup</a></li>
+          <li><a href="documentation.html" class='active'>documentation</a></li>
+          <li><a href="index.html">home</a></li>
+        </ul>
+      </nav>
+
+      <div class='logo'>fluf<em>(php)</em></div>
+    </header>
+
+    <div class='container'>
+      <div class='main'>
+        <entry>
+          <h3 id='fluf'>fluf</h3>
+          <p>Create your basic fluf application by including <code>fluf.php</code></p>
+<pre><code data-language="php">require_once 'lib/fluf.php';
+
+fluf\get('/', function () {
+  echo 'Hello World!';
+});</code></pre>
+        </entry>
+
+        <entry>
+          <h3 id='fluf.autorun'>fluf::$autorun</h3>
+          <p>Determines whether routes are fired upon addition or at the coders digression. By default this is set to <code>true</code>. If you wish to decide when routes are iterated over and fired, set this setting to <code>false</code> and calling the <code><a href="#fluf.run">fluf::run()</a></code> method.</p>
+        </entry>
+
+        <entry>
+          <h3 id='fluf.uri'>fluf::$uri</h3>
+          <p>Sanitized and cleaned <code>$_SERVER['REQUEST_URI']</code>.</p>
+        </entry>
+
+        <entry>
+          <h3 id='fluf.run'>fluf::run()</h3>
+          <p>Iterates and fires routes that match the current <code><a href="#fluf.uri">fluf::$uri</a></code>. Automatically ran upon addition of a route by default can be turned off and be self-managed through <code><a href="#fluf.autorun">fluf::$autorun</a></code> setting.</p>
+
+<pre><code data-language="php">require_once 'lib/fluf.php';
+fluf::$autorun = false;
+
+fluf\get('/', function () {
+  echo 'Hello World!';
+});
+
+// Iterate through and fires matched routes.
+fluf::run();</code></pre>
+        </entry>
+
+        <h2 id="routing">Routing</h2>
+
+        <entry>
+          <h3 id='fluf.VERB'>fluf\VERB($path, $callback, $conditions)</h3>
+          <p>The <code>fluf\VERB()</code> methods provide useful aliasing to routing functionality in your application, where <strong>VERB</strong> is one of the many HTTP verbs, for example <code>fluf\post()</code>.</p>
+
+          <p>The following code example illustrates the simplest route definition possible using anonymous functions, fluf takes the path given and converts it to a regular expression and then matches it against <code><a href="#fluf.uri">fluf::$uri</a></code> to determine whether it should be fired at runtime.</p>
+
+<pre><code data-language="php">fluf\get('/', function () {
+  echo 'hello world';
+});</code></pre>
+
+          <p>You are not limited to anonymous functions only, you can also utilize outside methods, and class methods if you prefer as illustrated by the following code example:</p>
+
+<pre><code data-language="php">class routes {
+  function home () {
+    echo 'hello world, class style.'
+  }
+}
+
+function home () {
+  echo 'hello world, functional style.';
+}
+
+// using an outside method
+fluf\get('/', 'home');
+
+// using a class method
+fluf\get('/home', array('routes','home'));</code></pre>
+        </entry>
+
+        <entry>
+          <h3 id='fluf.VERB.available'>Available VERBS</h3>
+          <p>Here is a full list of HTTP verbs available for use under the <code>fluf</code> namespace:</p>
+          <pre><code>get, post, put, delete, patch, head, options</code></pre>
+        </entry>
+
+        <entry>
+          <h3 id='fluf.VERB.parameters'>Named Parameters</h3>
+          <p>Route paths can contain named parameters, denoted by <code>:</code>, that will be matched and returned as a variable in the callback as illustrated in the following code example:</p>
+<pre><code data-language="php">fluf\get('/hello/:name', function ($name) {
+  echo 'Hello ', $name, '!';
+});</code></pre>
+        </entry>
+
+        <entry>
+          <h3 id='fluf.VERB.conditions'>Using Conditions</h3>
+          <p>Named parameters by default are matched against the given character set; <code>a-zA-Z0-9_\+\-%</code>; However, sometimes we need a more confined restraint, or even less constrained on the characters or numbers passed in. Instead of manually coding checks you can utilize the <code>$conditions</code> parameter of our VERBS methods.</p>
+
+          <p>For example, lets say we only want to match a numeric set on our <code>id</code> parameter for a blog post:</p>
+
+<pre><code data-language="php">fluf\get('/blog/post/:id', function ($id) {
+  echo 'Viewing blog post #', $id, '!';
+}, array(
+  'id' => '[0-9]+' // custom regex pattern
+));</code></pre>
+
+          <p>Now, only numbers will be accepted for the <code>id</code> parameter on this route.</p>
+        </entry>
+
+        <entry>
+          <h3 id='fluf.VERB.outside'>Accessing Outside Variables</h3>
+          <p>Sometimes you may need to access variables outside the anonymous scope of your routing functions. Be it templating reasons, settings, or a custom variable. By utilizing the <code>use</code> keyword this is possible as shown below:</p>
+<pre><code data-language="php">// We are using Twig from Symfony
+fluf\get('/', function () use ($twig) {
+  $template = $twig->loadTemplate('index.html');
+  echo $template->render(array());
+});</code></pre>
+        </entry>
+
+        <h2 id="mapping">Mapping</h2>
+
+        <entry>
+          <h3 id='fluf.map'>fluf\map($route, $callback)</h3>
+
+          <p>Allows direct delegation against a single or multiple requests using a single class method or (anonymous) function. <code>fluf\map()</code> is not constrained to the aliased HTTP verbs, thus allowing you to respond to custom request methods if required.</p>
+
+<pre><code data-language="php">fluf\map('/', function () {
+  if (fluf::$method === 'POST')
+    echo 'Hello World! - by A POST Request.';
+  else
+    echo 'Hello World! - by A GET Request.';
+})->via('GET', 'POST');</code></pre>
+        </entry>
+
+        <entry>
+          <h3 id='fluf.map.via'>fluf\map($route, $callback)->via($method...)</h3>
+          <p>Above is a very basic routing example using <code>fluf\map()</code> and does not show the full power either. When called <code>fluf\map()</code> returns an object with the <code>via()</code> method. You can leverage this functionality for authenticated pages, or any other crazy idea you may have as illustrated in the following code example:</p>
+
+<pre><code data-language="php">// Changing this to true makes the following route accessible.
+$logged_in = false;
+
+$index = fluf\map('/', function () {
+  echo 'hello world';
+});
+
+if ($logged_in) $index->via('GET');</code></pre>
+        </entry>
+
+<!-- Template
+        <entry>
+          <h3 id=''></h3>
+          <p></p>
+<pre><code data-language="php"></code></pre>
+        </entry>
+-->
+      </div>
+
+      <aside class='sidebar'>
+        <ul class='menu'>
+          <li class='api-fluf'>
+            <a href="#fluf">Getting Started</a>
+            <ul>
+              <li><a href="#fluf">fluf</a>
+              <li><a href="#fluf.autorun">fluf::$autorun</a></li>
+              <li><a href="#fluf.uri">fluf::$uri</a></li>
+              <li><a href="#fluf.run">fluf::run()</a></li>
+            </ul>
+          <li>
+          <li class='api-routing'>
+            <a href="#routing">Routing</a>
+            <ul>
+              <li><a href="#fluf.VERB">fluf\VERB()</a>
+              <li><a href="#fluf.VERB.available">Available VERBS</a>
+              <li><a href="#fluf.VERB.parameters">Named Parameters</a>
+              <li><a href="#fluf.VERB.conditions">Using Conditions</a>
+              <li><a href="#fluf.VERB.outside">Accessing Outside Variables</a>
+            </ul>
+          </li>
+          <li class='api-mapping'>
+            <a href="#mapping">Mapping</a>
+            <ul>
+              <li><a href="#fluf.map">fluf\map()</a>
+              <li><a href="#fluf.map.via">fluf\map()->via()</a>
+            </ul>
+          </li>
+          <li class='api-cookie'></li>
+          <li class='api-session'></li>
+        </ul>
+      </aside>
+    </div>
+
+    <script type="text/javascript" src="scripts/rainbow.min.js" defer="defer"></script>
+    <script type="text/javascript" src="scripts/languages/php.js" defer="defer"></script>
+  </body>
+</html>

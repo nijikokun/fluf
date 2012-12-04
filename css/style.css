@@ -64,16 +64,34 @@ body {
   color: #444;
 }
 
+body.alt {
+  padding-bottom: 20px;
+}
+
 h1, h2, h3 {
   margin: 5px 0;
   font-weight: normal;
   color: #353535;
 }
 
+pre, code {
+  -webkit-font-feature-settings: normal;
+  -ms-font-feature-settings: normal;
+  font-feature-settings: normal;
+}
+
 pre {
   border: 1px solid #F1F1F1;
   padding: 15px;
-  font-family: monaco, courier, monospace;
+}
+
+pre *, code * {
+  font-family: Consolas, Courier, monospace;
+  font-size: 13px;
+
+  -webkit-font-feature-settings: normal;
+  -ms-font-feature-settings: normal;
+  font-feature-settings: normal;
 }
 
 textarea.pyg {
@@ -111,37 +129,38 @@ nav ul li {
 }
 
 nav ul li a {
-  color: #CCCCCC;
+  color: #BBBBBB;
   text-transform: uppercase;
 }
 
 nav ul li a:hover {
-  color: #AAAAAA;
-}
-
-nav ul li a.active {
   color: #919191;
 }
 
+nav ul li a.active {
+  color: #222222;
+}
+
 /* Header / Aside */
-header, aside {
+.front header,
+.front aside {
   float: left;
   display: inline-block;
   margin: 45px 0;
 }
 
-header {
+.front header {
   width: 55%;
 }
 
-header .logo {
+.front header .logo {
   background: url('../images/logo.large.png') no-repeat;
   width: 234px;
   height: 183px;
   text-indent: -99999px;
 }
 
-header .statement {
+.front header .statement {
   position: relative;
   left: -35px;
   margin-top: 50px;
@@ -149,7 +168,7 @@ header .statement {
   font-size: 24px;
 }
 
-header .slash {
+.front header .slash {
   font-size: 72px;
   float: left;
   display: inline-block;
@@ -160,33 +179,33 @@ header .slash {
   left: -20px;
 }
 
-header .phrase {
+.front header .phrase {
   float: left;
 }
 
-header .phrase p {
+.front header .phrase p {
   display: block;
 }
 
-header .phrase p em {
+.front header .phrase p em {
   font-style: normal;
   color: #DDDDDD;
 }
 
-aside {
+.front aside {
   width: 45%;
   margin-top: 100px;
 }
 
-aside textarea {
+.front aside textarea {
   width: 100% !important;
 }
 
-aside a.download {
+.front aside a.download {
   display: block;
 }
 
-aside a.download .icon {
+.front aside a.download .icon {
   display: inline-block;
   background: #F1F1F1;
   color: #919191;
@@ -204,11 +223,11 @@ aside a.download .icon {
   -o-transition: color,background .2s;
 }
 
-.webkit aside a.download .icon {
+.front .webkit aside a.download .icon {
   top: 11px !important;
 }
 
-aside a.download .text {
+.front aside a.download .text {
   display: inline-block;
   background: #76C721;
   color: #FFFFFF;
@@ -224,23 +243,23 @@ aside a.download .text {
   line-height: 1.59;
 }
 
-.opera aside a.download .icon, 
-.opera aside.a.download:hover .icon {
+.front .opera aside a.download .icon, 
+.front .opera aside.a.download:hover .icon {
   color: transparent;
   background: none;
 }
 
-aside a.download:hover .icon {
+.front aside a.download:hover .icon {
   background: #76C721;
   color: #FFFFFF;
 }
 
-aside a.download:hover .text {
+.front aside a.download:hover .text {
   background: #F1F1F1;
   color: #919191;
 }
 
-aside a.download .text em {
+.front aside a.download .text em {
   display: block;
   line-height: .5;
   font-family: Segoe UI Semilight, Arial Semilight, Segoe UI, Arial, sans-serif;
@@ -251,9 +270,99 @@ aside a.download .text em {
   text-transform: uppercase;
 }
 
-aside a.download .text span {
+.front aside a.download .text span {
   float: right;
   font-family: Segoe UI Semibold, Arial Semibold, Segoe UI, Arial, sans-serif;
   font-size: 24px;
   margin-top: 12px;
+}
+
+/* Alternative Site Style */
+.alt :target {
+  padding-top: 50px;
+}
+
+.alt header {
+  display: block;
+  position: fixed;
+  top: 0; left: 0;
+  background: rgba(255,255,255,0.98);
+  height: 45px;
+  width: 100%;
+  padding: 0 20px;
+  z-index: 9999;
+}
+
+.alt header .logo {
+  display: block;
+  font: 400 24px Segoe UI, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #444444;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.alt header .logo em {
+  color: #EEE;
+}
+
+.alt header nav {
+  float: right;
+  margin-top: 10px;
+}
+
+.alt .container {
+  position: relative;
+  top: 40px;
+  width: 65%;
+  max-width: 960px;
+  margin: 0 100px 50px;
+}
+
+.alt aside {
+  position: fixed;
+  right: 20px;
+  top: 100px;
+  text-align: right;
+}
+
+.alt aside .menu ul {
+  margin-bottom: 10px;
+}
+
+.alt aside .menu li a {
+  text-transform: uppercase;
+  color: #222222;
+}
+
+.alt aside .menu li a:hover {
+  text-decoration: underline;
+}
+
+.alt aside .menu li li a {
+  text-transform: none;
+  color: #919191;
+  font-weight: normal;
+}
+
+.alt p {
+  margin-bottom: 15px;
+  font-size: 15px;
+}
+
+.alt p code {
+  background: #F1F1F1;
+  color: #444;
+  font-family: Consolas, Courier, monospace;
+  font-size: 14px;
+  padding: 2px 8px;
+}
+
+.alt h2 {
+  margin-top: 40px;
+}
+
+.alt entry h3 {
+  padding-top: 40px;
+  font-weight: bold;
+  font-size: 18px;
 }

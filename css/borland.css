@@ -1,0 +1,87 @@
+/**
+ * Borland Neue
+ *
+ * @author Nijiko Yonskai
+ * @version 1.0
+ */
+
+pre {
+    word-wrap: break-word;
+    color: #222;
+    font-size: 13px;
+    line-height: 16px;
+    margin-bottom: 20px;
+}
+
+pre .comment {
+    color: #AAAAAA; 
+    font-style: italic;
+}
+
+pre .keyword, pre .selector, pre .storage.module, pre .storage.class, pre .storage.function {
+    color: #000080;
+}
+
+pre .keyword.operator {
+    font-weight: bold;
+}
+
+pre .keyword.fluf {
+    color: #777777;
+}
+
+pre .constant.language {
+    color: #000080;
+}
+
+pre .constant.symbol, pre .class, pre .constant {
+    color: #000080;
+}
+
+pre .keyword.namespace, pre .entity.name.class {
+    color: #000080;
+}
+
+pre .constant.numeric {
+    color: #0000FF;
+}
+
+pre .string, pre .comment.docstring {
+    color: #0000FF;
+}
+
+pre .string.regexp {
+    color: #0000FF;
+}
+
+pre .variable.instance {
+    color: #000080;
+}
+
+pre .entity.name.function {
+    color: #000080;
+}
+
+pre .support.tag-name, pre .entity.tag.script, pre .entity.tag.style {
+    color: #0000FF;
+}
+
+pre .support.attribute {
+    color: #0000FF;
+}
+
+pre .entity.name.tag, pre .storage.type {
+    color: #0000FF;
+}
+
+pre .variable.self, pre .support.function {
+    color: #000080;
+}
+
+pre .entity.function, pre .support.magic, pre.support.method {
+    color: #0000FF;
+}
+
+pre .support {
+    color: #000080;
+}
