@@ -285,6 +285,21 @@ echo fluf::$session->key;</code></pre>
 <pre><code data-language="php">echo fluf::$session('key');</code></pre>
         </entry>
 
+        <entry>
+          <h3 id='fluf.session.unset'>fluf::$session->unset($key)</h3>
+          <p>Dereference and unsets a key-value property from the <code>fluf::$session</code> object.</p>
+<pre><code data-language="php">fluf::$session->unset('key');
+echo fluf::$session('key');</code></pre>
+        </entry>
+
+        <entry>
+          <h3 id='fluf.session.destroy'>fluf::$session->destroy($unset = false)</h3>
+          <p>Destroys the current session and also has the capabilities of un-setting all session data thoroughly if needed by setting <code>$unset</code> to <code>true</code></p>
+<pre><code data-language="php">fluf\get('/logout', function () {
+  fluf::$session->destroy(true);
+});</code></pre>
+        </entry>
+
         <h2 id='ajax'>Ajax</h2>
 
         <entry>
@@ -363,6 +378,8 @@ echo fluf::$session->key;</code></pre>
               <li><a href="#fluf.session">fluf::$session</a></li>
               <li><a href="#fluf.session.getting">Accessing</a></li>
               <li><a href="#fluf.session.setting">Setting</a></li>
+              <li><a href="#fluf.session.unset">fluf::$session->unset()</a></li>
+              <li><a href="#fluf.session.destroy">fluf::$session->destroy()</a></li>
             </ul>
           </li>
           <li class='api-ajax'>
