@@ -7,7 +7,7 @@
  * @version 1.0
  * @author Nijiko Yonskai <http://nexua.org>
  * @package fluf
- * @license AOL <http://aol.nexua.org/#!/http.php/Nijiko Yonskai/nijikokun@gmail.com/nijikokun>
+ * @license AOL <http://aol.nexua.org/#!/fluf.php/Nijiko Yonskai/nijikokun@gmail.com/nijikokun>
  */
 
 namespace {
@@ -61,20 +61,27 @@ namespace {
 
 namespace fluf {
   class Session {
-    public function __construct ($name) { session_name($name); session_start(); }
-    public function __get($k) { global $_SESSION; return isset($_SESSION[$k]) ? $_SESSION[$k] : null; }
-    public function __set($k, $v) { global $_SESSION; $_SESSION[$k] = $v; return $v; }
+    private $a;
+    public function __construct ($name) { session_name($name); session_start(); $this->a = $GLOBALS['_SESSION']; }
+    public function __get($k) { return isset($this->a[$k]) ? $this->a[$k] : null; }
+    public function __set($k, $v) { $this->a[$k] = $v; return $v; }
+    public function unset($k) { if ($this->a[$k]) unset($this->a[$K]); }
+    public function destroy($unset = false) { if($unset) session_unset(); return session_destroy(); }
   }
 
   class Cookie {
-    public function __construct () {}
-    public function __get($k) { global $_COOKIE; return isset($_COOKIE[$k]) ? $_COOKIE[$k] : null; }
-    public function __set($k, $v, $timeout = time() + 3600 * 60 * 60, $path = null, $domain = null, $secure = false, $httponly = false) { return setcookie($k, $v, $timeout, $path, $domain, $secure, $httponly); }
+    private $a;
+    public function __construct () { $this->a = $GLOBALS['_COOKIE']; }
+    public function __invoke($k, $v, $timeout = time() + 3600 * 60 * 60, $path = null, $domain = null, $secure = false, $httponly = false) { return $this->set($k, $v, $timeout, $path, $domain, $secure, $httponly); }
+    public function __get($k) { return isset($this->a[$k]) ? $this->a[$k] : null; }
+    public function set($k, $v, $timeout = time() + 3600 * 60 * 60, $path = null, $domain = null, $secure = false, $httponly = false) { return setcookie($k, $v, $timeout, $path, $domain, $secure, $httponly); }
+    public function unset($k) { if ($this->a[$K]) unset($this->a[$K]); return setcookie($k, null, -1); }
   }
 
   class Arrays {
     private $a;
     public function __construct(&$a) { $this->a = $a; }
+    public function __invoke($k, $v) { if(isset($v)) { $this->a[$k] = $v; return $v; } else return isset($this->a[$k]) ? $this->a[$k] : null; }
     public function __get($k) { return isset($this->a[$k]) ? $this->a[$k] : null; }
     public function __set($k, $v) { $this->a[$k] = $v; return $v; }
   }
