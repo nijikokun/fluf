@@ -257,6 +257,8 @@ fluf::$cookie->key = 'value';</code></pre>
           <h3 id='fluf.cookie.getting'>Accessing</h3>
           <p>Accessing information from <code>fluf::$cookie</code> is very trivial, in fact it's a simple object key, value store like so:</p>
 <pre><code data-language="php">echo fluf::$cookie->data;</code></pre>
+          <p>You can also access information by utilizing <code>fluf::$cookie</code> as a method and ommiting all parameters except the <code>$key</code>.</p>
+<pre><code data-language="php">echo fluf::$cookie('data');</code></pre>
         </entry>
 
         <h2 id="session">Session</h2>
@@ -270,6 +272,8 @@ fluf::$cookie->key = 'value';</code></pre>
           <h3 id='fluf.session.set'>Setting</h3>
           <p>Setting session data is not complex at all, in fact it's as straight forward as defining a property on the <code>fluf::$session</code> object as illustrated in the code example below.</p>
 <pre><code data-language="php">fluf::$session->key = 'value';</code></pre>
+          <p>An alternative method of setting session data is also available by using <code>fluf::$session</code> as a method:</p>
+<pre><code data-language="php">fluf::$session('key', 'value');</code></pre>
         </entry>
 
         <entry>
@@ -277,6 +281,8 @@ fluf::$cookie->key = 'value';</code></pre>
           <p>To retrieve stored session data reference the property from the <code>fluf::$session</code> object.</p>
 <pre><code data-language="php">// if set from earlier, this should echo 'value'
 echo fluf::$session->key;</code></pre>
+          <p>Once again, you are able to use <code>fluf::$session</code> as a method to retrieve data as well.</p>
+<pre><code data-language="php">echo fluf::$session('key');</code></pre>
         </entry>
 
         <h2 id='ajax'>Ajax</h2>
