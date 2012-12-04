@@ -17,7 +17,7 @@ namespace {
 
     static function setup () {
       self::$session = new \fluf\Session('fluf_session');
-      foreach (array('request','post','get','server', 'env', 'files') as $method)
+      foreach (array('request','post','get','server','env','files') as $method)
         self::${$method} = new \fluf\Arrays($GLOBALS['_'.strtoupper($method)]);
       self::$uri = preg_replace('/\?.+/', '', $_SERVER['REQUEST_URI']);
       self::$method = $_SERVER['REQUEST_METHOD'];
@@ -63,6 +63,7 @@ namespace fluf {
   class Session {
     private $a;
     public function __construct ($name) { session_name($name); session_start(); $this->a = $GLOBALS['_SESSION']; }
+    public function __invoke ($k, $v) { if(!isset($v)) return isset($this->a[$k]) ? $this->a[$k] : null; $this->a[$k] = $v; return $v;}
     public function __get($k) { return isset($this->a[$k]) ? $this->a[$k] : null; }
     public function __set($k, $v) { $this->a[$k] = $v; return $v; }
     public function unset($k) { if ($this->a[$k]) unset($this->a[$K]); }
@@ -72,7 +73,7 @@ namespace fluf {
   class Cookie {
     private $a;
     public function __construct () { $this->a = $GLOBALS['_COOKIE']; }
-    public function __invoke($k, $v, $timeout = time() + 3600 * 60 * 60, $path = null, $domain = null, $secure = false, $httponly = false) { return $this->set($k, $v, $timeout, $path, $domain, $secure, $httponly); }
+    public function __invoke($k, $v, $timeout = time() + 3600 * 60 * 60, $path = null, $domain = null, $secure = false, $httponly = false) { if (!isset($v)) isset($this->a[$k]) ? $this->a[$k] : null; else return $this-> return $this->set($k, $v, $timeout, $path, $domain, $secure, $httponly); }
     public function __get($k) { return isset($this->a[$k]) ? $this->a[$k] : null; }
     public function set($k, $v, $timeout = time() + 3600 * 60 * 60, $path = null, $domain = null, $secure = false, $httponly = false) { return setcookie($k, $v, $timeout, $path, $domain, $secure, $httponly); }
     public function unset($k) { if ($this->a[$K]) unset($this->a[$K]); return setcookie($k, null, -1); }
@@ -81,7 +82,7 @@ namespace fluf {
   class Arrays {
     private $a;
     public function __construct(&$a) { $this->a = $a; }
-    public function __invoke($k, $v) { if(isset($v)) { $this->a[$k] = $v; return $v; } else return isset($this->a[$k]) ? $this->a[$k] : null; }
+    public function __invoke($k, $v) { if(!isset($v)) { $this->a[$k] = $v; return $v; } else return isset($this->a[$k]) ? $this->a[$k] : null; }
     public function __get($k) { return isset($this->a[$k]) ? $this->a[$k] : null; }
     public function __set($k, $v) { $this->a[$k] = $v; return $v; }
   }
