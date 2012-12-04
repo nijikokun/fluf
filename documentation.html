@@ -158,6 +158,30 @@ $index = fluf\map('/', function () {
 if ($logged_in) $index->via('GET');</code></pre>
         </entry>
 
+        <h2 id="request">Requests</h2>
+
+        <entry>
+          <h3 id='fluf.request.VERB'>fluf::$VERB</h3>
+          <p>The <code>fluf::$VERB</code> properties are similiar to the <code>fluf\VERB</code> methods in which <strong>VERB</strong> relates to three possible HTTP request methods; <code>get</code>, <code>post</code> and <code>request</code>. For example <code>fluf::$get</code> is an alias for the <code>$_GET</code> array, and <code>fluf::$post</code> the <code>$_POST</code> array.</p>
+          <p>These properties are simple key value objects, with an optional base method functionality that is illustrated below. The last method <code>fluf::$request</code> will reference both the <code>get</code>, and <code>post</code> objects as well as the associative <code>$_COOKIE</code> array.</p>
+<pre><code data-language="php">fluf\map('/', function () {
+  // Basic retrieval
+  if (fluf::$get->name) echo 'Hello ', fluf::$get->name, ', from a get request!';
+  if (fluf::$post->name) echo 'Hello ', fluf::$post->name, ', from a post request!';
+
+  // Either post, get, or cookie
+  if (fluf::$request->by) echo ' By ', fluf::$request->by;
+
+  // Alternative method
+  if (fluf::$get('foo')) echo 'bar';
+
+  // Setting values
+  // You can also do: fluf::$get('bar', 'foo');
+  fluf::$get->bar = 'foo';
+  if (fluf::$get->bar) echo '<br />', fluf::$get->bar;
+})->via('GET', 'POST');</code></pre>
+        </entry>
+
         <h2 id="redirection">Redirection</h2>
 
         <entry>
@@ -255,6 +279,20 @@ fluf::$cookie->key = 'value';</code></pre>
 echo fluf::$session->key;</code></pre>
         </entry>
 
+        <h2 id='ajax'>Ajax</h2>
+
+        <entry>
+          <h3 id='fluf.ajax'>fluf::ajax()</h3>
+          <p>Returns a boolean value of <code>true</code> if request was made through xhttp.</p>
+<pre><code data-language="php">echo fluf::ajax() ? 'true' : 'false';</code></pre>
+
+          <p>Can be utilized to respond with JSON by returning an array on a route request as illustrated below.</p>
+<pre><code data-language="php">fluf\get('/', function () {
+  if (fluf::ajax())
+    return array( 'Hello', 'World' ); // outputs: [ 'Hello', 'World' ]
+});</code></pre>
+        </entry>
+
 <!-- Template
         <entry>
           <h3 id=''></h3>
@@ -292,6 +330,12 @@ echo fluf::$session->key;</code></pre>
               <li><a href="#fluf.map.via">fluf\map()->via()</a>
             </ul>
           </li>
+          <li class='api-mapping'>
+            <a href="#request">Requests</a>
+            <ul>
+              <li><a href="#fluf.request.VERB">fluf::$VERB</a>
+            </ul>
+          </li>
           <li class='api-redirection'>
             <a href="#redirection">Redirection</a>
             <ul>
@@ -313,6 +357,12 @@ echo fluf::$session->key;</code></pre>
               <li><a href="#fluf.session">fluf::$session</a></li>
               <li><a href="#fluf.session.getting">Accessing</a></li>
               <li><a href="#fluf.session.setting">Setting</a></li>
+            </ul>
+          </li>
+          <li class='api-ajax'>
+            <a href="#ajax">Ajax</a>
+            <ul>
+              <li><a href="#fluf.ajax">fluf::ajax()</a></li>
             </ul>
           </li>
         </ul>
