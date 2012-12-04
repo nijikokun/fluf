@@ -327,6 +327,12 @@ nav ul li a.active {
 
 .alt aside .menu ul {
   margin-bottom: 10px;
+  height: 0;
+  overflow: hidden;
+}
+
+.alt aside .menu ul.active {
+  height: auto;
 }
 
 .alt aside .menu li a {
@@ -342,6 +348,10 @@ nav ul li a.active {
   text-transform: none;
   color: #919191;
   font-weight: normal;
+}
+
+.alt aside .menu li li a.active {
+  color: #0000FF;
 }
 
 .alt p {

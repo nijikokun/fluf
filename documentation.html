@@ -158,6 +158,103 @@ $index = fluf\map('/', function () {
 if ($logged_in) $index->via('GET');</code></pre>
         </entry>
 
+        <h2 id="redirection">Redirection</h2>
+
+        <entry>
+          <h3 id='fluf.redirect'>fluf::redirect($path, $exit = true)</h3>
+          <p>Redirects traffic according to the given <code>$path</code> and optional exit support which by default is <code>true</code> to prevent futher code from being executed.</p>
+<pre><code data-language="php">fluf\get('/logout', function () {
+  fluf::redirect('/');
+});
+
+fluf\get('/', function () {
+  echo 'Welcome!';
+});</code></pre>
+        </entry>
+
+        <h2 id="cookie">Cookies</h2>
+
+        <entry>
+          <h3 id='fluf.cookie'>fluf::$cookie</h3>
+          <p>Accessor and alias to superglobal <code>$_COOKIE</code> array, also available as a setter method, see <a href="#fluf.cookie.set">fluf::$cookie()</a>.</p>
+        </entry>
+
+        <entry>
+          <h3 id='fluf.cookie.set'>fluf::$cookie($key, $value, $timeout, $path, $domain, $secure, $httponly)</h3>
+          <p>Alias to native <code>setcookie()</code> method. Must be utilized before any output from script happens. <code>$key</code> and <code>$value</code> are the only required parameters, the others have default settings and are as follows:</p>
+
+          <dl>
+            <dt><code>$key</code></dt>
+            <dd>Name of cookie being defined.</dd>
+
+            <dt><code>$value</code></dt>
+            <dd>Value stored in cookie definition.</dd>
+          
+            <dt><code>$timeout</code></dt>
+            <dd>Expiration date of cookie definition in UNIX timestamp format; Defined in seconds, default <code>time() + 3600 * 60 * 60</code>. For a cookie which expires at the end of session (browser digression) set to <code>0</code>.</dd>
+
+            <dt><code>$path</code></dt>
+            <dd>Path on which cookie definition is available on, if defined on <code>/</code> the cookie definition will be available on the entire <code>$domain</code>.</dd>
+
+            <dt><code>$domain</code></dt>
+            <dd>Domain on which cookie definition is available to.</dd>
+
+            <dt><code>$secure</code></dt>
+            <dd>Boolean which decides whether cookie should be transported over HTTPS only or not. Default value is <code>false</code></dd>
+
+            <dt><code>$httponly</code></dt>
+            <dd>When <code>true</code> cookie is only accessible over HTTP. Read more about this in the PHP documentation if more information is needed.</dd>
+          </dl>
+
+<pre><code data-language="php">// Basic Example
+fluf::$cookie('key', 'value');
+
+// Expires in an hour
+fluf::$cookie('key', 'value', time() + 3600);
+
+// In-depth example
+fluf::$cookie('key', 'value', time() + 3600, '/', 'example.com', false, true);</code></pre>
+          
+          <p>Alternatively, you can define a property on the <code>fluf::$cookie</code> object, this uses the default values for all parameters except <code>$key</code> and <code>$value</code>.</p>
+
+<pre><code data-language="php">// same as fluf::$cookie('key', 'value');
+fluf::$cookie->key = 'value';</code></pre>
+        </entry>
+
+        <entry>
+          <h3 id='fluf.cookie.unset'>fluf::$cookie->unset($key)</h3>
+          
+          <p>Sets <code>$timeout</code> to a past date, negative value, to fire the browsers removal mechanism, and sets the <code>$value</code> to <code>null</code>.</p>
+
+<pre><code data-language="php">fluf::$cookie->unset('key');</code></pre>
+        </entry>
+
+        <entry>
+          <h3 id='fluf.cookie.getting'>Accessing</h3>
+          <p>Accessing information from <code>fluf::$cookie</code> is very trivial, in fact it's a simple object key, value store like so:</p>
+<pre><code data-language="php">echo fluf::$cookie->data;</code></pre>
+        </entry>
+
+        <h2 id="session">Session</h2>
+
+        <entry>
+          <h3 id='fluf.session'>fluf::$session</h3>
+          <p>Accessor and alias to superglobal <code>$_SESSION</code> array.</p>
+        </entry>
+
+        <entry>
+          <h3 id='fluf.session.set'>Setting</h3>
+          <p>Setting session data is not complex at all, in fact it's as straight forward as defining a property on the <code>fluf::$session</code> object as illustrated in the code example below.</p>
+<pre><code data-language="php">fluf::$session->key = 'value';</code></pre>
+        </entry>
+
+        <entry>
+          <h3 id='fluf.session.get'>Accessing</h3>
+          <p>To retrieve stored session data reference the property from the <code>fluf::$session</code> object.</p>
+<pre><code data-language="php">// if set from earlier, this should echo 'value'
+echo fluf::$session->key;</code></pre>
+        </entry>
+
 <!-- Template
         <entry>
           <h3 id=''></h3>
@@ -195,13 +292,57 @@ if ($logged_in) $index->via('GET');</code></pre>
               <li><a href="#fluf.map.via">fluf\map()->via()</a>
             </ul>
           </li>
-          <li class='api-cookie'></li>
-          <li class='api-session'></li>
+          <li class='api-redirection'>
+            <a href="#redirection">Redirection</a>
+            <ul>
+              <li><a href="#fluf.redirect">fluf::redirect()</a>
+            </ul>
+          </li>
+          <li class='api-cookie'>
+            <a href="#cookie">Cookies</a>
+            <ul>
+              <li><a href="#fluf.cookie">fluf::$cookie</a></li>
+              <li><a href="#fluf.cookie.set">fluf::$cookie()</a></li>
+              <li><a href="#fluf.cookie.unset">fluf::$cookie->unset()</a></li>
+              <li><a href="#fluf.cookie.getting">Accessing</a></li>
+            </ul>
+          </li>
+          <li class='api-session'>
+            <a href="#session">Sessions</a>
+            <ul>
+              <li><a href="#fluf.session">fluf::$session</a></li>
+              <li><a href="#fluf.session.getting">Accessing</a></li>
+              <li><a href="#fluf.session.setting">Setting</a></li>
+            </ul>
+          </li>
         </ul>
       </aside>
     </div>
 
     <script type="text/javascript" src="scripts/rainbow.min.js" defer="defer"></script>
     <script type="text/javascript" src="scripts/languages/php.js" defer="defer"></script>
+    <script type="text/javascript">
+      $(function(){
+        var prev, n = 0;
+
+        var headings = $('h3').map(function(i, el){
+          return { top: $(el).offset().top, id: el.id }
+        });
+
+        function closest() {
+          var h, top = $(window).scrollTop(), i = headings.length;
+          while (i--) { h = headings[i]; if (top >= h.top-40) return h; }
+        };
+
+        $(document).scroll(function(){
+          var h = closest(), a;
+          if (!h) return;
+          if (prev) prev.removeClass('active'), prev.parent().parent().removeClass('active');
+          a = $('a[href="#' + h.id + '"]');
+          a.addClass('active'); a.parent().parent().addClass('active');
+          prev = a;
+        })
+      });
+    </script>
   </body>
 </html>
