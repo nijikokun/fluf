@@ -52,8 +52,8 @@ jsonParse({
       "version": "0.5",
       "description": "Minor Release",
       "changes": [
-        "changed: Use `eval` for higher efficiency than static repeated code.",
-        "changed: Changed `$$v` to `${$v}` and `$$methods` to `${$methods}` to prevent overloading."
+        "improved: Use `eval` for higher efficiency than static repeated code.",
+        "fixed: Changed `$$v` to `${$v}` and `$$methods` to `${$methods}` to prevent overloading."
       ]
     },
 
