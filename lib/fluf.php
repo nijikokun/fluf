@@ -60,31 +60,26 @@ namespace {
 }
 
 namespace fluf {
-  class Session {
-    private $a;
-    public function __construct ($name) { session_name($name); session_start(); $this->a = $GLOBALS['_SESSION']; }
-    public function __invoke ($k, $v) { if(!isset($v)) return isset($this->a[$k]) ? $this->a[$k] : null; $this->a[$k] = $v; return $v;}
+  class Arrays {
+    protected $a;
+    public function __construct(&$a) { $this->a = $a; }
+    public function __invoke($k, $v) { if(!isset($v)) return isset($this->a[$k]) ? $this->a[$k] : null; $this->a[$k] = $v; return $v; }
     public function __get($k) { return isset($this->a[$k]) ? $this->a[$k] : null; }
     public function __set($k, $v) { $this->a[$k] = $v; return $v; }
+  }
+
+  class Session extends Arrays {
+    public function __construct ($name) { session_name($name); session_start(); parent::__construct($GLOBALS['_SESSION']); }
     public function unset($k) { if ($this->a[$k]) unset($this->a[$K]); }
     public function destroy($unset = false) { if($unset) session_unset(); return session_destroy(); }
   }
 
-  class Cookie {
-    private $a;
-    public function __construct () { $this->a = $GLOBALS['_COOKIE']; }
-    public function __invoke($k, $v, $timeout = time() + 3600 * 60 * 60, $path = null, $domain = null, $secure = false, $httponly = false) { if (!isset($v)) isset($this->a[$k]) ? $this->a[$k] : null; else return $this-> return $this->set($k, $v, $timeout, $path, $domain, $secure, $httponly); }
-    public function __get($k) { return isset($this->a[$k]) ? $this->a[$k] : null; }
-    public function set($k, $v, $timeout = time() + 3600 * 60 * 60, $path = null, $domain = null, $secure = false, $httponly = false) { return setcookie($k, $v, $timeout, $path, $domain, $secure, $httponly); }
+  class Cookie extends Arrays {
+    public function __construct () { parent::__construct($GLOBALS['_COOKIE']); }
+    public function __invoke($k, $v, $expires = time()+3600*60*60, $path = null, $domain = null, $secure = false, $httponly = false) { if (!isset($v)) isset($this->a[$k]) ? $this->a[$k] : null; else return $this-> return $this->set($k, $v, $expires, $path, $domain, $secure, $httponly); }
+    public function __set($k, $v) { return $this->set($k, $v); }
+    public function set($k, $v, $expires = time()+3600*60*60, $path = null, $domain = null, $secure = false, $httponly = false) { return setcookie($k, $v, (is_string($expires) ? strtotime($expires) : $expires), $path, $domain, $secure, $httponly); }
     public function unset($k) { if ($this->a[$K]) unset($this->a[$K]); return setcookie($k, null, -1); }
-  }
-
-  class Arrays {
-    private $a;
-    public function __construct(&$a) { $this->a = $a; }
-    public function __invoke($k, $v) { if(!isset($v)) { $this->a[$k] = $v; return $v; } else return isset($this->a[$k]) ? $this->a[$k] : null; }
-    public function __get($k) { return isset($this->a[$k]) ? $this->a[$k] : null; }
-    public function __set($k, $v) { $this->a[$k] = $v; return $v; }
   }
 
   class Route {
