@@ -369,7 +369,7 @@ nav ul li a.active {
   font-size: 15px;
 }
 
-.alt p code, .alt code {
+.alt p code, .alt .changes code {
   background: #F1F1F1;
   color: #444;
   font-family: Consolas, Courier, monospace;
