@@ -277,6 +277,16 @@ nav ul li a.active {
   margin-top: 12px;
 }
 
+.front aside .changelog {
+  text-align: right;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.front aside .changelog a {
+  color: #AAAAAA;
+}
+
 /* Alternative Site Style */
 .alt :target {
   padding-top: 50px;
@@ -359,7 +369,7 @@ nav ul li a.active {
   font-size: 15px;
 }
 
-.alt p code {
+.alt p code, .alt code {
   background: #F1F1F1;
   color: #444;
   font-family: Consolas, Courier, monospace;
@@ -375,4 +385,51 @@ nav ul li a.active {
   padding-top: 50px;
   font-weight: bold;
   font-size: 18px;
+}
+
+.alt .releases h2 {
+  border-bottom: 1px solid rgb(238, 238, 238);
+  font-weight: normal;
+  font-size: 18px;
+  padding-top: 6px;
+  padding-bottom: 5px;
+}
+
+.alt .releases span {
+  background: rgb(75, 163, 233);
+  color: white;
+  display: block;
+  font-size: 18px;
+  left: -72px;
+  padding: 6px 0;
+  position: absolute;
+  text-align: center;
+  width: 60px;
+}
+
+.alt .releases .changes {
+  font-size: 14px;
+}
+
+.alt .releases .changes em:first-child {
+  font-style: normal;
+  background: #AAAAAA;
+  color: white;
+  padding: 0px 6px 2px 6px;
+  border: 1px solid white;
+  width: 100px;
+  text-align: center;
+  display: inline-block;
+}
+
+.alt .releases .changes em.fixed {
+  background: #76C721;
+}
+
+.alt .releases .changes em.added {
+  background: #44A3E9;
+}
+
+.alt .releases .changes em.improved {
+  background: #AA44FF;
 }
