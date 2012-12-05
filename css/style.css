@@ -387,6 +387,32 @@ nav ul li a.active {
   font-size: 18px;
 }
 
+.alt section {
+  width: 50%;
+  padding: 0 25px 25px 0;
+  float: left;
+}
+
+.alt section.third {
+  width: 30%;
+}
+
+.alt section.full {
+  width: 100%;
+}
+
+.alt section h3 {
+  text-transform: uppercase;
+}
+
+.alt section p {
+  color: #777777;
+}
+
+.alt section p a {
+  color: #0000FF;
+}
+
 .alt .releases h2 {
   border-bottom: 1px solid rgb(238, 238, 238);
   font-weight: normal;
