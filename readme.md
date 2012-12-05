@@ -1,4 +1,4 @@
-![fluf logo](http://cl.ly/image/3D0l1e2p3W1j/flufphp.logo.png)
+![fluf logo](http://nijikokun.github.com/fluf/images/flufphp.logo.png)
 
   A Fast, Minimalistic, Micro Routing / Web Application Framework for PHP5.
 
