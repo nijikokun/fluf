@@ -1,0 +1,97 @@
+jsonParse({
+  "releases": [
+    {
+      "version": "1.0.3",
+      "date": 1354680793,
+      "description": "Minor Release",
+      "changes": [
+        "fixed: Array `__invoke()` method was backwards, isset had incorrect operand prefix.",
+        "improved: `fluf\\Session` and `fluf\\Cookie` now extend from `fluf\\Array`",
+        "added: Ability to use strings for `$expires` on `fluf::$cookie->set()` see [strtotime](http://us1.php.net/manual/en/function.strtotime.php).",
+        "changed: `$timeout` variable to `$expires` in cookie setting methods on `fluf\\Cookie`"
+      ]
+    },
+
+    {
+      "version": "1.0.2",
+      "description": "Minor Release",
+      "changes": [
+        "added: Ability to invoke objects as method, reference example: `fluf::$session($key, $value)`",
+        "added: `unset` and `destroy` methods on `fluf\\Session`"
+      ]
+    },
+
+    {
+      "version": "1.0.1",
+      "description": "Minor Release",
+      "changes": [
+        "fixed: License URI in framework header comment block."
+      ]
+    },
+
+    {
+      "version": "1.0",
+      "description": "Major Release",
+      "changes": [
+        "changed: Framework name from *http* to *fluf* for marking and visibility reasons.",
+        "implemented: `fluf::$cookie`, `fluf::$files`, `fluf::$env` support.",
+        "fixed: Issues where `fluf\\map` was not referencing `fluf\\Map` directly.",
+        "implemented: New setting `fluf::$autorun` for environments that require control of route runtime, see documentation.",
+        "Cleaned up codebase in some areas regarding whitespace and code compression."
+      ]
+    },
+
+    {
+      "version": "0.6",
+      "description": "Minor Release",
+      "changes": [
+        "fixed: Use `$_GLOBALS[$v]` instead of `${$v}` to fix superglobal references."
+      ]
+    },
+
+    {
+      "version": "0.5",
+      "description": "Minor Release",
+      "changes": [
+        "change: Use `eval` for higher efficiency than static repeated code.",
+        "change: Changed `$$v` to `${$v}` and `$$methods` to `${$methods}` to prevent overloading.",
+        "Cleaned up repeated code and whitespace."
+      ]
+    },
+
+    {
+      "version": "0.4",
+      "description": "Minor Release",
+      "changes": [
+        "added: Advanced routing control through `fluf\\map`"
+      ]
+    },
+
+    {
+      "version": "0.3",
+      "description": "Minor Release",
+      "changes": [
+        "added: Ability to exit to prevent further code execution through `fluf::redirect()`."
+      ]
+    },
+
+    {
+      "version": "0.2",
+      "description": "Minor Release",
+      "changes": [
+        "added: Support to return JSON output through routing.",
+        "added: Redirection support via `fluf::redirect()`",
+        "added: Static Request Objects to class `fluf`",
+        "fixed: URI named routing parameters not matching correctly."
+      ]
+    },
+
+    {
+      "version": "0.1",
+      "description": "Initial Public Release",
+      "changes": [
+        "Release",
+      ]
+    },
+  ]
+});

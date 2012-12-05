@@ -4,7 +4,7 @@
  *
  * A Micro-Routing / Web Application Framework for PHP(5) - Without the excess "fluf"
  *
- * @version 1.0
+ * @version 1.0.3
  * @author Nijiko Yonskai <http://nexua.org>
  * @package fluf
  * @license AOL <http://aol.nexua.org/#!/fluf.php/Nijiko Yonskai/nijikokun@gmail.com/nijikokun>
