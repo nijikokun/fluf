@@ -34,10 +34,9 @@ jsonParse({
       "description": "Major Release",
       "changes": [
         "changed: Framework name from *http* to *fluf* for marking and visibility reasons.",
-        "implemented: `fluf::$cookie`, `fluf::$files`, `fluf::$env` support.",
+        "added: `fluf::$cookie`, `fluf::$files`, `fluf::$env` support.",
         "fixed: Issues where `fluf\\map` was not referencing `fluf\\Map` directly.",
-        "implemented: New setting `fluf::$autorun` for environments that require control of route runtime, see documentation.",
-        "Cleaned up codebase in some areas regarding whitespace and code compression."
+        "added: New setting `fluf::$autorun` for environments that require control of route runtime, see documentation."
       ]
     },
 
@@ -53,9 +52,8 @@ jsonParse({
       "version": "0.5",
       "description": "Minor Release",
       "changes": [
-        "change: Use `eval` for higher efficiency than static repeated code.",
-        "change: Changed `$$v` to `${$v}` and `$$methods` to `${$methods}` to prevent overloading.",
-        "Cleaned up repeated code and whitespace."
+        "changed: Use `eval` for higher efficiency than static repeated code.",
+        "changed: Changed `$$v` to `${$v}` and `$$methods` to `${$methods}` to prevent overloading."
       ]
     },
 
