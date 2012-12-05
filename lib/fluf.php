@@ -7,7 +7,7 @@
  * @version 1.0.3
  * @author Nijiko Yonskai <http://nexua.org>
  * @package fluf
- * @license AOL <http://aol.nexua.org/#!/fluf.php/Nijiko Yonskai/nijikokun@gmail.com/nijikokun>
+ * @license AOL <http://aol.nexua.org/#!/fluf.php/Nijiko+Yonskai/nijikokun@gmail.com/nijikokun>
  */
 
 namespace {

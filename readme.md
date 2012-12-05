@@ -31,7 +31,10 @@ fluf\get('/', function () {
 
 ## License
 
-  Licensed under [AOL](http://aol.nexua.org/#!/fluf.php/Nijiko Yonskai/nijikokun@gmail.com/nijikokun)
+  [Attribute Only (Public) License](http://aol.nexua.org/#!/fluf.php/Nijiko+Yonskai/nijikokun@gmail.com/nijikokun)
+  Version 0.6, Dec 03, 2012
+  
+  Copyright (C) Nijiko Yonskai <nijikokun@gmail.com> (@nijikokun)
 
 ## Contributors
 
