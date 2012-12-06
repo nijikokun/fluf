@@ -62,7 +62,7 @@ fluf::run();</code></pre>
         <h2 id="routing">Routing</h2>
 
         <entry>
-          <h3 id='fluf.VERB'>fluf\VERB($path, $callback, $conditions)</h3>
+          <h3 id='fluf.VERB'>fluf\VERB($path, $middleware (optional), $callback, $conditions)</h3>
           <p>The <code>fluf\VERB()</code> methods provide useful aliasing to routing functionality in your application, where <strong>VERB</strong> is one of the many HTTP verbs, for example <code>fluf\post()</code>.</p>
 
           <p>The following code example illustrates the simplest route definition possible using anonymous functions, fluf takes the path given and converts it to a regular expression and then matches it against <code><a href="#fluf.uri">fluf::$uri</a></code> to determine whether it should be fired at runtime.</p>
@@ -101,6 +101,33 @@ fluf\get('/home', array('routes','home'));</code></pre>
           <p>Route paths can contain named parameters, denoted by <code>:</code>, that will be matched and returned as a variable in the callback as illustrated in the following code example:</p>
 <pre><code data-language="php">fluf\get('/hello/:name', function ($name) {
   echo 'Hello ', $name, '!';
+});</code></pre>
+        </entry>
+
+        <entry>
+          <h3 id="fluf.VERB.middleware">Using Middleware</h3>
+          <p>Middleware technology, allows you to take control of your routes before the route <code>$callback</code> parameter is ever invoked. Middleware can be used for many things such as authentication, permissions, load resources, etc...</p>
+          <p>Middleware functions can be anonymous, string reference, or an array filled with string / array class references. These functions take in two parameters:</p>
+
+          <dl>
+            <dt><code>$params</code></dt>
+            <dd>Associative array filled with matched route paramters, modifying this will modify parameters passed along to <code>$callback</code></dd>
+
+            <dt><code>$next($error = null)</code></dt>
+            <dd>Waterfall callback, will go to the next middleware method on the matched route or call <code>$callback</code>. If you wish to skip the remaining middleware passing along <code>route</code> in the parameter <code>$error</code> will do so. Passing any other string to <code>$error</code> will throw an exception.</dd>
+          </dl>
+
+<pre><code data-language="php">function middleware ($params, $next) {
+  if ($params['what'] === 'hi') $next();
+  else fluf::redirect('/');
+}
+
+fluf\get('/:what', 'middleware', function ($what) {
+  echo 'Well, hello there :)';
+});
+
+fluf\get('/', function () {
+  echo 'Hello World!';
 });</code></pre>
         </entry>
 
@@ -246,19 +273,19 @@ fluf::$cookie->key = 'value';</code></pre>
         </entry>
 
         <entry>
-          <h3 id='fluf.cookie.unset'>fluf::$cookie->unset($key)</h3>
-          
-          <p>Sets <code>$timeout</code> to a past date, negative value, to fire the browsers removal mechanism, and sets the <code>$value</code> to <code>null</code>.</p>
-
-<pre><code data-language="php">fluf::$cookie->unset('key');</code></pre>
-        </entry>
-
-        <entry>
           <h3 id='fluf.cookie.getting'>Accessing</h3>
           <p>Accessing information from <code>fluf::$cookie</code> is very trivial, in fact it's a simple object key, value store like so:</p>
 <pre><code data-language="php">echo fluf::$cookie->data;</code></pre>
           <p>You can also access information by utilizing <code>fluf::$cookie</code> as a method and ommiting all parameters except the <code>$key</code>.</p>
 <pre><code data-language="php">echo fluf::$cookie('data');</code></pre>
+        </entry>
+
+        <entry>
+          <h3 id='fluf.cookie.unset'>Unsetting</h3>
+          
+          <p>Sets <code>$timeout</code> to a past date, negative value, to fire the browsers removal mechanism, and sets the <code>$value</code> to <code>null</code>.</p>
+
+<pre><code data-language="php">unset(fluf::$cookie->key);</code></pre>
         </entry>
 
         <h2 id="session">Session</h2>
@@ -286,9 +313,9 @@ echo fluf::$session->key;</code></pre>
         </entry>
 
         <entry>
-          <h3 id='fluf.session.unset'>fluf::$session->unset($key)</h3>
+          <h3 id='fluf.session.unset'>Unsetting</h3>
           <p>Dereference and unsets a key-value property from the <code>fluf::$session</code> object.</p>
-<pre><code data-language="php">fluf::$session->unset('key');
+<pre><code data-language="php">unset(fluf::$session->key);
 var_dump(fluf::$session('key'));</code></pre>
         </entry>
 
@@ -340,6 +367,7 @@ var_dump(fluf::$session('key'));</code></pre>
               <li><a href="#fluf.VERB">fluf\VERB()</a>
               <li><a href="#fluf.VERB.available">Available VERBS</a>
               <li><a href="#fluf.VERB.parameters">Named Parameters</a>
+              <li><a href="#fluf.VERB.middleware">Using Middleware</a>
               <li><a href="#fluf.VERB.conditions">Using Conditions</a>
               <li><a href="#fluf.VERB.outside">Accessing Outside Variables</a>
             </ul>
@@ -368,8 +396,8 @@ var_dump(fluf::$session('key'));</code></pre>
             <ul>
               <li><a href="#fluf.cookie">fluf::$cookie</a></li>
               <li><a href="#fluf.cookie.set">fluf::$cookie()</a></li>
-              <li><a href="#fluf.cookie.unset">fluf::$cookie->unset()</a></li>
               <li><a href="#fluf.cookie.getting">Accessing</a></li>
+              <li><a href="#fluf.cookie.unset">Unsetting</a></li>
             </ul>
           </li>
           <li class='api-session'>
@@ -378,7 +406,7 @@ var_dump(fluf::$session('key'));</code></pre>
               <li><a href="#fluf.session">fluf::$session</a></li>
               <li><a href="#fluf.session.set">Setting</a></li>
               <li><a href="#fluf.session.get">Accessing</a></li>
-              <li><a href="#fluf.session.unset">fluf::$session->unset()</a></li>
+              <li><a href="#fluf.session.unset">Unsetting</a></li>
               <li><a href="#fluf.session.destroy">fluf::$session->destroy()</a></li>
             </ul>
           </li>
