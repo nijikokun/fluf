@@ -8,7 +8,8 @@ jsonParse({
         "fixed: Array `__invoke()` method had malformed code.",
         "fixed: `fluf::$session` and `fluf::$cookie` properties now can be unset using the native `unset()`.",
         "fixed: invalid parameter name used in `fluf\\Session` and `fluf\\Cookie`",
-        "added: Middleware support for routing, see Issue:#5"
+        "added: Middleware support for routing, see Issue:#5",
+        "fixed: Routing issue when using root slash."
       ]
     },
     

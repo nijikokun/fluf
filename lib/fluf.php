@@ -55,7 +55,7 @@ namespace {
         if ($r->match && !$r->ran) {
           if (!empty($r->middleware) && count($r->middleware) > 0) {
             $next = function ($error = null) use (&$r, &$next) { $r->mwarecount++;
-              if ($error = 'route' || $r->mwarecount >= count($r->middleware)) fluf::handleResult(call_user_func_array($r->callback, $r->params));
+              if ($error = 'route' || $r->mwarecount >= count($r->middleware)) { $r->mwarecount = 0; fluf::handleResult(call_user_func_array($r->callback, $r->params)); }
               else if (!empty($error) && is_string($error)) throw new Exception($error);
               else call_user_func_array($r->middleware[$r->mwarecount], array(&$r->params, $next));
             };
