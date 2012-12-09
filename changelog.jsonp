@@ -11,9 +11,10 @@ jsonParse({
         "added: Settings and static methods `fluf::get` and `fluf::set` to manage them. Issue:#9",
         "changed: Removed `fluf::$autorun` in favor of settings, now use `fluf::(g|s)et('autorun')`",
         "added: `flufException` class for custom exceptions and future exception needs.",
-        "improved: Began implementing comments using markdown for future documentation.",
         "added: Excess plugins (_Excesses_), first excess is `fluf.db.php`; Found in the `excesses` directory.",
-        "fixed: First middleware call `$params` are not referenced."
+        "fixed: First middleware call `$params` are not referenced.",
+        "added: JSONP / CORS Support in `fluf::handleResult()` method. Issue:#11",
+        "added: `fluf::headers()` and `fluf::response()` methods that delegate out headers and responses respectively."
       ]
     },
 

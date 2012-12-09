@@ -93,11 +93,48 @@ class fluf {
     }
   }
 
+  /**
+   * Take route method `return` result and utilize it as a response. Any set headers will be 
+   * set and sent along with the response, and then cleared as per `fluf::response()` method.
+   * 
+   * Allows for easy JSON / JSONP response depending on settings, and cors support as well.
+   * 
+   * @param  Mixed  $result JSON/JSONP Response will be array based, all others are string based.
+   */
   static function handleResult ($result) {
     if (is_array($result)) { 
-      header('Content-type: application/json; charset=utf-8'); 
-      echo json_encode($result); 
-    }
+      $response = json_encode($result);
+      self::set('header', 'Content-type', 'application/json; charset=utf-8');
+      if (self::get('cors')) self::set('header', 'access-control-allow-origin', '*');
+      if (self::get('jsonp') && self::$get->callback)
+        if (preg_match('/^([a-zA-Z0-9_]+)$', self::$get->callback) > 0)
+          $response = self::$get->callback . "($response)";
+    } else $response = $result;
+
+    if (isset($response)) self::response($response);
+  }
+
+  /**
+   * Checks `headers_sent()` if headers have been sent, if not takes and sets any `header` 
+   * keys that have been set using `fluf::set()`. Afterwards, removes and unsets all `header` 
+   * keys.
+   */
+  static function headers () {
+    if (headers_sent()) return;
+    $headers = self::get('header');
+    if (is_array($headers) && count($headers) > 0)
+      foreach ($headers as $k => $v) header($k . ': ' . $v);
+    self::set('header', null);
+  }
+
+  /**
+   * Returns given response to the client, and sets any headers via `fluf::headers()`.
+   *  
+   * @param  Mixed  $response Response to send to client
+   */
+  static function response ($response) {
+    self::headers();
+    echo $response;
   }
 
   static function add ($rule, $method, $middleware = null, $callback = null, $cond = null) {
@@ -145,7 +182,7 @@ class fluf {
   static function set ($key, $value, $hvalue = false) {
     if ($key === 'header' && $hvalue !== false)
       if (!is_array(self::$settings[$key])) return self::$settings[$key] = array($value => $hvalue);
-      else  return self::$settings[$key][$value] = $hvalue;
+      else return self::$settings[$key][$value] = $hvalue;
     self::$settings[$key] = $value;
   }
 
@@ -166,13 +203,13 @@ class fluf {
         if (!empty($r->middleware) && count($r->middleware) > 0) {
           $next = function ($error = null) use (&$r, &$next) { $r->mwarecount++;
             if ($error = 'route' || $r->mwarecount >= count($r->middleware)) { 
-              $r->mwarecount = 0; fluf::handleResult(call_user_func_array($r->callback, $r->params));
+              $r->mwarecount = 0; fluf::handleResult(call_user_func_array($r->callback, $r->params), $r->params);
             } else if (!empty($error) && is_string($error)) flufException::raise(new flufMiddlewareException($error));
             else call_user_func_array($r->middleware[$r->mwarecount], array(&$r->params, $next));
           };
           call_user_func_array($r->middleware[$r->mwarecount], array(&$r->params, $next));
         } else 
-          fluf::handleResult(call_user_func_array($r->callback, $r->params));
+          fluf::handleResult(call_user_func_array($r->callback, $r->params), $r->params);
         $r->ran = true;
       } else 
         unset(self::$routes[$i]);
