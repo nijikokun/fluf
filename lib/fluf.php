@@ -187,9 +187,8 @@ class flufArray {
   }
 
   public function __invoke ($k, $v) { 
-    if(!isset($v)) 
-      return isset($this->a[$k]) ? $this->a[$k] : null; 
-    $this->a[$k] = $v; 
+    if (!isset($v)) return isset($this->a[$k]) ? $this->a[$k] : null; 
+    else $this->a[$k] = $v; 
     return $v; 
   }
 
@@ -204,19 +203,16 @@ class flufArray {
 
 class flufSession extends flufArray {
   public function __construct ($name) { 
-    session_name($name); 
-    session_start(); 
+    session_name($name); session_start(); 
     parent::__construct($GLOBALS['_SESSION']);
   }
 
   public function __unset ($k) { 
-    if (isset($this->a[$k])) 
-      unset($this->a[$k]); 
+    if (isset($this->a[$k])) unset($this->a[$k]); 
   }
 
   public function destroy ($unset = false) { 
-    if($unset) 
-      session_unset(); 
+    if ($unset) session_unset(); 
     return session_destroy(); 
   }
 }
@@ -227,10 +223,8 @@ class flufCookie extends flufArray {
   }
 
   public function __invoke ($k, $v, $expires = '+30 Days', $path = null, $domain = null, $secure = false, $httponly = false) { 
-    if (!isset($v)) 
-      (isset($this->a[$k]) ? $this->a[$k] : null); 
-    else 
-      return $this->set($k, $v, $expires, $path, $domain, $secure, $httponly); 
+    if (!isset($v)) isset($this->a[$k]) ? $this->a[$k] : null; 
+    else return $this->set($k, $v, $expires, $path, $domain, $secure, $httponly); 
   }
 
   public function __set ($k, $v) { 
@@ -238,8 +232,7 @@ class flufCookie extends flufArray {
   }
 
   public function __unset ($k) { 
-    if (isset($this->a[$k])) 
-      unset($this->a[$k]); 
+    if (isset($this->a[$k])) unset($this->a[$k]); 
     return setcookie($k, null, -1); 
   }
 

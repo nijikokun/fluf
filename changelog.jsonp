@@ -1,6 +1,22 @@
 jsonParse({
   "releases": [
     {
+      "version": "1.1",
+      "date": 1355082120,
+      "description": "Major Release",
+      "changes": [
+        "changed: Removed `fluf` namespace, and changed `\\fluf\\ClassName` to `flufClassName`. Issue:#6",
+        "changed: `fluf\\VERB()` methods are now global methods for example: `VERB()`. Issue:#6"
+        "changed: `map` function is now `request`. Issue:#7",
+        "added: Settings and static methods `fluf::get` and `fluf::set` to manage them. Issue:#9",
+        "changed: Removed `fluf::$autorun` in favor of settings, now use `fluf::(g|s)et('autorun')`",
+        "added: `flufException` class for custom exceptions and future exception needs.",
+        "improved: Began implementing comments using markdown for future documentation.",
+        "added: Excess plugins (_Excesses_), first excess is `fluf.db.php`; Found in the `excesses` directory."
+      ]
+    },
+
+    {
       "version": "1.0.4",
       "date": 1354759359,
       "description": "Minor Release",
