@@ -8,14 +8,14 @@
 <?
 require_once 'lib/fluf.php';
 
-fluf\get('/', function () {
+get('/', function () {
   echo 'Hello World!';
 });
 ```
 
 ## Features
 
-  * Utilizes own namespace to keep application namespace clean.
+  * Utilizes neatly named methods and classes for clean code.
   * Robust Routing system with Request management.
   * Simplifies Session, Cookie, and File coding.
   * HTTP Helpers; (Ajax, Redirection, etc...)
