@@ -170,7 +170,7 @@ class fluf {
             } else if (!empty($error) && is_string($error)) flufException::raise(new flufMiddlewareException($error));
             else call_user_func_array($r->middleware[$r->mwarecount], array(&$r->params, $next));
           };
-          call_user_func_array($r->middleware[$r->mwarecount], array($r->params, $next));
+          call_user_func_array($r->middleware[$r->mwarecount], array(&$r->params, $next));
         } else 
           fluf::handleResult(call_user_func_array($r->callback, $r->params));
         $r->ran = true;
