@@ -148,11 +148,11 @@ class fluf {
 
   static function add ($rule, $method, $middleware = null, $callback = null, $cond = null) {
     if (!empty($middleware)) {
-      if (empty($callback))
+      if (empty($callback)) {
         if (is_callable($middleware)) {
           $callback = $middleware; $middleware = null;  
         }
-      else if (!is_callable($callback)) {
+      } else if (!is_callable($callback) || (is_array($callback) && !method_exists($callback))) {
         $cond = $callback; $callback = $middleware; $middleware = null;
       }
     }
@@ -293,9 +293,17 @@ class flufRoute {
 
   function __construct ($uri, $url, $method, $middleware = null, $callback = null, $cond = null) {
     if (empty($uri) || empty($url) || empty($method) || empty($callback)) return;
-    if (is_callable($callback)) $this->callback = $callback;
+
+    if (is_callable($callback)) 
+      $this->callback = $callback; 
+    else if(is_array($callable) && count($callable) > 1) {
+      $cond = $callable;
+      $callable = null;
+    }
+
     if (!empty($middleware)) if (is_string($middleware) && is_callable($middleware)) $this->middleware[] = $middleware;
     else if (is_array($middleware)) foreach ($middleware as $key => $value) if (is_callable($value)) $this->middleware[] = $value;
+
     $this->method = is_array($method) ? $method : array( $method );
     $this->conditions = is_array($cond) ? $cond : array(); $this->url = $url; $this->uri = $uri;
     $this->compile();
